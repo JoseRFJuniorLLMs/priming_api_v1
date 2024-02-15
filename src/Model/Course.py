@@ -10,7 +10,6 @@ class Course(Document):
     name: str
     objective: str
     content: List[str]
-    lessons: List[str]
     category: str
     level: str
     price: str

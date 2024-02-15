@@ -16,3 +16,4 @@ class Lesson(Document):
     status: str
     date: datetime
     duration_minutes: int
+    course: ObjectIdField
