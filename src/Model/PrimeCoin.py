@@ -16,3 +16,4 @@ class PrimeCoin(Document):
     privateKey: str
     creationDate: datetime
     issue: str
+    dateupdate: datetime

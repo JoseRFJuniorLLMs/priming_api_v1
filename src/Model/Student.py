@@ -10,11 +10,19 @@ class Student(Document):
     name: str
     email: str
     tax_ident_number: str
+    personal_ident_number: str
     login: str
     password: str
     status: Status = Status.ACTIVE
     course: List[ObjectId] = []
     lesson_done: List[ObjectId] = []
+    gender: str
+    fone: str
+    end: str
+    country: str
+    city: str
+    spoken_language: str
+    scheduled_lessons: List[ObjectId] = []
 
     @classmethod
     async def validate_login(cls, login: str, password: str):

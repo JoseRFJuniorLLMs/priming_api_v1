@@ -15,3 +15,5 @@ class Course(Document):
     level: str
     price: str
     status: Status = Status.ACTIVE
+    start: str
+    end: str
