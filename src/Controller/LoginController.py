@@ -32,6 +32,7 @@ async def logout():
     pass
 
 
+@app.post("/auth")
 async def login_with_google(token: str = Depends(oauth2_scheme)):
     # !Todo
     pass
