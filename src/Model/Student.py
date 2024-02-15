@@ -1,3 +1,5 @@
+import datetime
+
 from beanie import Document
 from bson import ObjectId
 from typing import List, Optional
@@ -17,12 +19,20 @@ class Student(Document):
     course: List[ObjectId] = []
     lesson_done: List[ObjectId] = []
     gender: str
-    fone: str
+    cel_fone: str
     end: str
     country: str
     city: str
     spoken_language: str
     scheduled_lessons: List[ObjectId] = []
+    linkedin: str
+    facebook: str
+    instagram: str
+    tictok: str
+    x: str
+    image_url: str
+    date_create: datetime
+    books: List[ObjectId] = []
 
     @classmethod
     async def validate_login(cls, login: str, password: str):
