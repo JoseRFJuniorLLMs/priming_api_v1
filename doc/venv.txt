@@ -1,0 +1,24 @@
+pip install virtualenv
+sudo apt install python3-venv
+python -m venv myenv
+python3 -m venv myenv
+venv\Scripts\activate
+source bin/activate
+	
+
+MES 9 - 1.231,66  €
+MES 10- 1.686,00  €
+MES 11- 2.379,05  €
+MES 12- 2.161,45  €
+MES 01- 1.746,00  €
+MES 02- 1.746,00  €
+
+Electra Coraline  300  material escolar
+Oriana            500  notebook
+Fritz             100  demanda
+Aluguel           500  hostel
+----------------------
+total             1.400 €
+
+SOBRA: 346,00 €
+

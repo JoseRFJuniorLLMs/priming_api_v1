@@ -2,8 +2,8 @@ from fastapi import APIRouter, HTTPException, Depends, status
 from fastapi.security import OAuth2PasswordBearer
 from datetime import timedelta
 
-from src.Model.Login import Login
-from src.Service.LoginService import LoginService
+from Model.Login import Login
+from Service.LoginService import LoginService
 
 app = APIRouter()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
