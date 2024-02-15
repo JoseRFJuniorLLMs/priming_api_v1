@@ -2,7 +2,7 @@ from typing import List, Optional
 from beanie import Document
 from bson import ObjectId
 
-from src.Model.Status import Status
+from Model.Status import Status
 
 
 class Course(Document):
