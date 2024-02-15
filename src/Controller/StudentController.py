@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException, status
 from Model.Student import Student
 from Service.StudentService import StudentService
 from Service.LoginService import LoginService
@@ -17,12 +17,28 @@ async def get_student_by_username(username: str, current_user: str = Depends(Log
 
 
 @app.delete("/{username}", status_code=204)
-async def delete_student(username: str):
-    # ! todo
-    pass
+async def delete_student(username: str, current_user: str = Depends(LoginService.get_current_user)):
+    student = await Student.find_one({"login": username})
+    if not student:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Student not found")
+
+    if student.login != current_user:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
+                            detail="You don't have permission to delete this student")
+
+    await student.delete()
+    return
 
 
 @app.patch("/{username}", response_model=Student)
-async def update_student(username: str, student:Student):
-    # ! TODO
-    pass
+async def update_student(username: str, student: Student, current_user: str = Depends(LoginService.get_current_user)):
+    db_student = await Student.find_one({"login": username})
+    if not db_student:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Student not found")
+
+    if db_student.login != current_user:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
+                            detail="You don't have permission to update this student")
+
+    updated_student = await StudentService.update(db_student, student)
+    return updated_student
