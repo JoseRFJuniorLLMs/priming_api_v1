@@ -15,3 +15,4 @@ class Books(Document):
     description: str
     price: str
     availability: str
+    url: str
