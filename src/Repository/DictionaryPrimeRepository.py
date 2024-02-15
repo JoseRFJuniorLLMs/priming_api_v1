@@ -1,4 +1,4 @@
-from src.Model.DictionaryPrime import DictionaryPrime
+from Model.DictionaryPrime import DictionaryPrime
 
 
 class DictionaryPrimeRepository:

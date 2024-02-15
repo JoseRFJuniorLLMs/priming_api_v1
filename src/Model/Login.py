@@ -1,5 +1,5 @@
 from beanie import Document
-from src.Model.Type import Type
+from Model.Type import Type
 
 
 class Login(Document):
