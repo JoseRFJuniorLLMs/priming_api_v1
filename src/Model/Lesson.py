@@ -4,6 +4,7 @@ from beanie import Document
 from bson import ObjectId
 from datetime import time  # Importe time do módulo datetime
 
+
 class Lesson(Document):
     id: Optional[int] = None
     name: str

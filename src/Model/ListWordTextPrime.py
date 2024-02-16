@@ -1,6 +1,6 @@
 from typing import List, Optional
 from beanie import Document
-
+from bson import ObjectId
 
 
 class ListWordTextPrime(Document):
@@ -11,6 +11,7 @@ class ListWordTextPrime(Document):
 
     class Settings:
         name = "primeTargetListWordTextCollecion"
+
     class Config:
         arbitrary_types_allowed = True
         json_encoders = {

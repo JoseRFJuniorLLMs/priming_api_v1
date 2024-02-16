@@ -4,7 +4,7 @@ from beanie import Document
 from bson import ObjectId
 from typing import List, Optional
 
-from src.Model.StatusOnline import StatusOnline
+from StatusOnline import StatusOnline
 
 
 class Student(Document):

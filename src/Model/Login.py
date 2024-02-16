@@ -1,7 +1,7 @@
 import time
 
 from beanie import Document
-from Model.Type import Type
+from src.Model.Type import Type
 
 
 class Login(Document):

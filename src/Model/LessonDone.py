@@ -5,7 +5,8 @@ from beanie import Document
 from bson import ObjectId
 from typing import List, Optional
 
-from Model.Status import StatusLesson
+from src.Model.StatusLesson import StatusLesson
+
 
 class LessonDone(Document):
     id: Optional[int] = None
@@ -13,6 +14,7 @@ class LessonDone(Document):
     end: time
     status_lesson: StatusLesson = StatusLesson.PENDING
     lesson: [ObjectId]
+
 
 class Settings:
     name = "LessonDoneCollection"
