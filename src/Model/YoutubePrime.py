@@ -5,6 +5,7 @@ from beanie import Document
 
 class YoutubePrime(Document):
     _id: Optional[int] = None
+    # prime: ObjectId = ObjectId()
     prime: str
     target: str
     url: List[str]
