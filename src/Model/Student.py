@@ -37,7 +37,7 @@ class Student(Document):
     x: str
     image_url: str
     date_create: datetime
-    bitcoin: ObjectId
+    bitcoin: List[ObjectId] = []
 
     @classmethod
     async def validate_login(cls, login: str, password: str):
