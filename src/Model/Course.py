@@ -17,3 +17,5 @@ class Course(Document):
     start: str
     end: str
     duration_month: int
+    class Settings:
+        name = "CourseCollection"
