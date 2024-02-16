@@ -6,6 +6,8 @@ from typing import List, Optional
 
 from Model.Status import Status
 
+from priming_api_v1.src.Model.Online import Online
+
 
 class Student(Document):
     _id: Optional[str]
@@ -16,10 +18,11 @@ class Student(Document):
     login: str
     password: str
     status: Status = Status.ACTIVE
+    online: Online = Online.ACTIVE
     course: List[ObjectId] = []
     lesson_done: List[ObjectId] = []
     gender: str
-    cel_fone: str
+    fone_number: str
     end: str
     country: str
     city: str
@@ -35,6 +38,7 @@ class Student(Document):
     books: List[ObjectId] = []
     bitcoin: ObjectId
 
+
     @classmethod
     async def validate_login(cls, login: str, password: str):
         student = await cls.find_one({"login": login, "password": password})
@@ -45,6 +49,7 @@ class Student(Document):
             "name": self.name,
             "email": self.email,
             "status": self.status,
+            "online": self.online,
             "login": self.login
         }
 
