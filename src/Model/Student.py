@@ -21,13 +21,15 @@ class Student(Document):
     online: Online = Online.ACTIVE
     course: List[ObjectId] = []
     lesson_done: List[ObjectId] = []
+    scheduled_lessons: List[ObjectId] = []
+    books: List[ObjectId] = []
+    list_word_text: List[ObjectId] = []
     gender: str
     fone_number: str
     end: str
     country: str
     city: str
     spoken_language: str
-    scheduled_lessons: List[ObjectId] = []
     linkedin: str
     facebook: str
     instagram: str
@@ -35,7 +37,6 @@ class Student(Document):
     x: str
     image_url: str
     date_create: datetime
-    books: List[ObjectId] = []
     bitcoin: ObjectId
 
     @classmethod
