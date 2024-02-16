@@ -25,7 +25,7 @@ class Student(Document):
     books: List[ObjectId] = []
     list_word_text: List[ObjectId] = []
     gender: str
-    fone_number: str
+    phone: str
     end: str
     country: str
     city: str
@@ -33,7 +33,7 @@ class Student(Document):
     linkedin: str
     facebook: str
     instagram: str
-    tictok: str
+    tiktok: str
     x: str
     image_url: str
     date_create: datetime

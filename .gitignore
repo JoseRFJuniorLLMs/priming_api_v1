@@ -23,6 +23,8 @@ var/
 wheels/
 share/python-wheels/
 *.egg-info/
+doc/
+nome_do_ambiente/
 .installed.cfg
 *.egg
 MANIFEST
