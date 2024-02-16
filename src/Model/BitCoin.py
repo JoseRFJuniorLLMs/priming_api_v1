@@ -1,9 +1,11 @@
+import datetime
+from typing import List, Optional
 from beanie import Document
-from datetime import datetime
-from typing import List
+from bson import ObjectId
 
 
-class PrimeCoin(Document):
+class BitCoin(Document):
+    _id: Optional[ObjectId] = None
     name: str
     description: str
     primeCoinValue: float
@@ -19,4 +21,4 @@ class PrimeCoin(Document):
     dateupdate: datetime
 
     class Settings:
-        name = "CoinCollection"
+        name = "BitCoinCollection"

@@ -1,9 +1,11 @@
+from typing import List, Optional
 from beanie import Document
-from typing import Optional, List
+from bson import ObjectId
 
 from Course import Course
 from Module import Module
 class Books(Document):
+    _id: Optional[ObjectId] = None
     title: str
     author: str
     isbn: str
@@ -16,3 +18,6 @@ class Books(Document):
     price: str
     availability: str
     url: str
+
+    class Settings:
+        name = "BooksCollection"
