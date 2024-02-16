@@ -18,7 +18,7 @@ class Lesson(Document):
     status: str
     date: datetime
     duration_minutes: int
-    course: ObjectIdField
+    course: [ObjectId]
 
     class Settings:
         name = "LessonCollection"
