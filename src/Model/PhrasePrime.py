@@ -3,10 +3,10 @@ from bson import ObjectId
 from beanie import Document
 
 
-class PrhasePrime(Document):
+class PhrasePrime(Document):
     _id: Optional[int] = None
     # prime: ObjectId = ObjectId()
-    prime: ObjectId = ObjectId()
+    prime: str
     target: str
     phrase: List[str]
     url: List[str]
