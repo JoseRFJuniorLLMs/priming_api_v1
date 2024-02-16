@@ -6,7 +6,7 @@ from typing import List, Optional
 
 from Model.Status import Status
 
-from priming_api_v1.src.Model.Online import Online
+from priming_api_v1.src.Model.StatusOnline import Online
 
 
 class Student(Document):

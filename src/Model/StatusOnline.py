@@ -1,7 +1,7 @@
 import enum
 
 
-class Online(enum.Enum):
+class StatusOnline(enum.Enum):
     ACTIVE = "ACTIVE"
     INACTIVE = "INACTIVE"
 
