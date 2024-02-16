@@ -1,16 +1,18 @@
 import datetime
-from typing import Optional
-from beanie import Document, ObjectIdField
+from typing import Optional, List
+from beanie import Document
+from bson import ObjectId
 from datetime import time  # Importe time do módulo datetime
 
 class Lesson(Document):
     id: Optional[int] = None
     name: str
-    prime: ObjectIdField
-    youtubeUrl: ObjectIdField
-    text: ObjectIdField
-    pharse: ObjectIdField
-    dictionary: ObjectIdField
+    prime: ObjectId = ObjectId()
+    youtubeUrl: ObjectId = ObjectId()
+    text: ObjectId = ObjectId()
+    pharse: ObjectId = ObjectId()
+    dictionary: ObjectId = ObjectId()
+    list_word_text: List[ObjectId] = []
     start: time
     end: time
     status: str

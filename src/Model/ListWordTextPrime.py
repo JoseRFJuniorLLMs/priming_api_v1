@@ -6,7 +6,7 @@ from beanie import Document
 class ListWordTextPrime(Document):
     _id: Optional[int] = None
     list_word: List[str]
-    text_prime: List[ObjectId] = []
+    text_prime: [ObjectId]
     total: int
 
     class Settings:

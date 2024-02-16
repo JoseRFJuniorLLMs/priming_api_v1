@@ -11,9 +11,8 @@ class LessonDone(Document):
     id: Optional[int] = None
     start: time
     end: time
-    status: str
-    lesson: List[ObjectId] = []
-
+    status_lesson: StatusLesson = StatusLesson.PENDING
+    lesson: [ObjectId]
 
 class Settings:
     name = "LessonDoneCollection"
