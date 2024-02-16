@@ -4,9 +4,7 @@ from beanie import Document
 from bson import ObjectId
 from typing import List, Optional
 
-from Model.Status import Status
-
-from priming_api_v1.src.Model.StatusOnline import Online
+from src.Model.StatusOnline import StatusOnline
 
 
 class Student(Document):
@@ -17,8 +15,7 @@ class Student(Document):
     personal_ident_number: str
     login: str
     password: str
-    status: Status = Status.ACTIVE
-    online: Online = Online.ACTIVE
+    status: StatusOnline = StatusOnline.ACTIVE
     course: List[ObjectId] = []
     lesson_done: List[ObjectId] = []
     scheduled_lessons: List[ObjectId] = []
