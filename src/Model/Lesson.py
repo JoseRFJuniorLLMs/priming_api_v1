@@ -11,8 +11,8 @@ class Lesson(Document):
     text: ObjectIdField
     pharse: ObjectIdField
     dictionary: ObjectIdField
-    start: time  # Campo de início do tipo time
-    end: time  # Campo de fim do tipo time
+    start: time
+    end: time
     status: str
     date: datetime
     duration_minutes: int

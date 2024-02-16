@@ -8,3 +8,7 @@ class TextPrime(Document):
     prime: str
     target: str
     text: str
+
+    class Settings:
+        name = "primeTargetTextCollection"
+

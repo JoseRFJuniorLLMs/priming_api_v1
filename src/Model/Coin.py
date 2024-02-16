@@ -17,3 +17,6 @@ class PrimeCoin(Document):
     creationDate: datetime
     issue: str
     dateupdate: datetime
+
+    class Settings:
+        name = "CoinCollection"

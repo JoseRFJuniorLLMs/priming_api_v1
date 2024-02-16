@@ -16,3 +16,4 @@ class Course(Document):
     status: Status = Status.ACTIVE
     start: str
     end: str
+    duration_month: int
