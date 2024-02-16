@@ -38,7 +38,6 @@ class Student(Document):
     books: List[ObjectId] = []
     bitcoin: ObjectId
 
-
     @classmethod
     async def validate_login(cls, login: str, password: str):
         student = await cls.find_one({"login": login, "password": password})
