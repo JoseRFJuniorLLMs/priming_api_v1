@@ -3,7 +3,7 @@ from beanie import init_beanie
 from motor.motor_asyncio import AsyncIOMotorClient
 from src.Model.Student import Student
 from src.Model.Login import Login
-from Controller import LoginController, StudentController
+from src.Controller import LoginController, StudentController
 from src.Service.LoginService import LoginService
 
 app = FastAPI()

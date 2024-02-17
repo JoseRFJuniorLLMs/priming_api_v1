@@ -15,7 +15,6 @@ class LessonDone(Document):
     status_lesson: StatusLesson = StatusLesson.PENDING
     lesson: [ObjectId]
 
-
 class Settings:
     name = "LessonDoneCollection"
 

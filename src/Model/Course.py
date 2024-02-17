@@ -2,7 +2,7 @@ from typing import List, Optional
 from beanie import Document
 from bson import ObjectId
 
-from StatusOnline import StatusOnline
+from src.Model.StatusOnline import StatusOnline
 
 
 class Course(Document):
@@ -17,5 +17,6 @@ class Course(Document):
     start: str
     end: str
     duration_month: int
+
     class Settings:
         name = "CourseCollection"

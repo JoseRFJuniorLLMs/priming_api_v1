@@ -1,10 +1,9 @@
-import datetime
-
 from beanie import Document
 from bson import ObjectId
 from typing import List, Optional
+from pydantic import datetime_parse
 
-from StatusOnline import StatusOnline
+from src.Model.StatusOnline import StatusOnline
 
 
 class Student(Document):
@@ -33,7 +32,7 @@ class Student(Document):
     tiktok: str
     x: str
     image_url: str
-    date_create: datetime
+    date_create: str
     bitcoin: List[ObjectId] = []
 
     @classmethod
