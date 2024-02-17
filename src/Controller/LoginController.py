@@ -29,22 +29,22 @@ async def login(login_data: Login):
 @app.post("/logout")
 async def logout():
     # !Todo
-<<<<<<< HEAD
+
     return {"message": "Logged out successfully"}
-=======
+
     pass
->>>>>>> origin/main
+
 
 
 @app.post("/auth")
 async def login_with_google(token: str = Depends(oauth2_scheme)):
     # !Todo
-<<<<<<< HEAD
+
     raise HTTPException(
         status_code=status.HTTP_501_NOT_IMPLEMENTED,
         detail="Authentication with Google is not implemented yet",
     )
-=======
+
     pass
->>>>>>> origin/main
+
 

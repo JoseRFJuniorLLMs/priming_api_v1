@@ -1,13 +1,13 @@
 from beanie import Document
 from typing import Optional, List
 
-<<<<<<< HEAD
+
 from src.Model.Course import Course
 from src.Model.Module import Module
-=======
+
 from Course import Course
 from Module import Module
->>>>>>> origin/main
+
 
 
 class Classroom(Document):

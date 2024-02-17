@@ -1,20 +1,20 @@
-<<<<<<< HEAD
+
 from datetime import datetime
 from typing import Optional, List
 from beanie import Document
 from bson import ObjectId
-=======
+
 from typing import Optional
 from beanie import Document
 
 from src.Model.Course import Course
->>>>>>> origin/main
+
 
 
 class Lesson(Document):
     id: Optional[int] = None
     name: str
-<<<<<<< HEAD
+
     prime: ObjectId = ObjectId
     youtubeUrl: ObjectId = ObjectId
     text: ObjectId = ObjectId
@@ -30,8 +30,8 @@ class Lesson(Document):
 
     class Settings:
         name = "LessonCollection"
-=======
+
     youtubeUrl: str
     course: Course
     time: str
->>>>>>> origin/main
+

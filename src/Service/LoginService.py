@@ -3,11 +3,8 @@ from fastapi import HTTPException, status, Depends
 from fastapi.security import OAuth2PasswordBearer
 from jose import jwt, JWTError
 
-<<<<<<< HEAD
 from src.Model.StatusOnline import StatusOnline
-=======
 from src.Model.Status import Status
->>>>>>> origin/main
 from src.Model.Student import Student
 from src.Service.StudentService import StudentService
 
@@ -28,11 +25,11 @@ class LoginService:
     @staticmethod
     async def login(login_data):
         student = await Student.validate_login(login_data.username, login_data.password)
-<<<<<<< HEAD
+
         if student.status == StatusOnline.INACTIVE:
-=======
+
         if student.status == Status.INACTIVE:
->>>>>>> origin/main
+
             student.status = "ACTIVE"
             await student.save()
         if not student:

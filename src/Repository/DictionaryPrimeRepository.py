@@ -1,8 +1,8 @@
-<<<<<<< HEAD
+
 from Model.DictionaryPrime import DictionaryPrime
-=======
+
 from src.Model.DictionaryPrime import DictionaryPrime
->>>>>>> origin/main
+
 
 
 class DictionaryPrimeRepository:
