@@ -2,7 +2,7 @@ from typing import List, Optional
 from beanie import Document
 from bson import ObjectId
 
-from Model.Status import Status
+from src.Model.StatusOnline import StatusOnline
 
 
 class Course(Document):
@@ -13,9 +13,10 @@ class Course(Document):
     category: str
     level: str
     price: str
-    status: Status = Status.ACTIVE
+    status: StatusOnline = StatusOnline.ACTIVE
     start: str
     end: str
     duration_month: int
+
     class Settings:
         name = "CourseCollection"

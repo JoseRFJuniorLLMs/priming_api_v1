@@ -1,8 +1,0 @@
-pip install virtualenv
-sudo apt install python3-venv
-python -m venv myenv
-python3 -m venv myenv
-venv\Scripts\activate
-source bin/activate
-	
-

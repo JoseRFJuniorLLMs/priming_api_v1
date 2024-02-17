@@ -1,8 +1,8 @@
 from beanie import Document
 from typing import Optional, List
 
-from Course import Course
-from Module import Module
+from src.Model.Course import Course
+from src.Model.Module import Module
 
 
 class Classroom(Document):

@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from Model.Student import Student
-from Service.StudentService import StudentService
-from Service.LoginService import LoginService
+from src.Model.Student import Student
+from src.Service.StudentService import StudentService
+from src.Service.LoginService import LoginService
 
 app = APIRouter()
 

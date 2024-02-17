@@ -1,10 +1,10 @@
 from fastapi import FastAPI, Depends
 from beanie import init_beanie
 from motor.motor_asyncio import AsyncIOMotorClient
-from Model.Student import Student
-from Model.Login import Login
-from Controller import LoginController, StudentController
-from Service.LoginService import LoginService
+from src.Model.Student import Student
+from src.Model.Login import Login
+from src.Controller import LoginController, StudentController
+from src.Service.LoginService import LoginService
 
 app = FastAPI()
 

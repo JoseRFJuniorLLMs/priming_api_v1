@@ -1,4 +1,4 @@
-from Model.Student import Student
+from src.Model.Student import Student
 
 
 class StudentService:

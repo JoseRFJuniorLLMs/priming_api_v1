@@ -1,12 +1,9 @@
-import datetime
-
 from beanie import Document
 from bson import ObjectId
 from typing import List, Optional
+from pydantic import datetime_parse
 
-from Model.Status import Status
-
-from priming_api_v1.src.Model.StatusOnline import Online
+from src.Model.StatusOnline import StatusOnline
 
 
 class Student(Document):
@@ -17,27 +14,26 @@ class Student(Document):
     personal_ident_number: str
     login: str
     password: str
-    status: Status = Status.ACTIVE
-    online: Online = Online.ACTIVE
-    course: List[ObjectId] = []
-    lesson_done: List[ObjectId] = []
-    scheduled_lessons: List[ObjectId] = []
-    books: List[ObjectId] = []
-    list_word_text: List[ObjectId] = []
-    gender: str
-    phone: str
-    end: str
-    country: str
-    city: str
-    spoken_language: str
-    linkedin: str
-    facebook: str
-    instagram: str
-    tiktok: str
-    x: str
-    image_url: str
-    date_create: datetime
-    bitcoin: List[ObjectId] = []
+    status: StatusOnline = StatusOnline.ACTIVE
+    courses: Optional[List[ObjectId]] = []
+    lessons_done: Optional[List[ObjectId]] = []
+    scheduled_lessons: Optional[List[ObjectId]] = []
+    books: Optional[List[ObjectId]] = []
+    list_word_text: Optional[List[ObjectId]] = []
+    # gender: Optional[str]
+    # phone: Optional[str]
+    # end: Optional[str]
+    # country: Optional[str]
+    # city: Optional[str]
+    # spoken_language: Optional[str]
+    # linkedin: Optional[str]
+    # facebook: Optional[str]
+    # instagram: Optional[str]
+    # tiktok: Optional[str]
+    # x: Optional[str]
+    # image_url: Optional[str]
+    # date_create: Optional[str]
+    bitcoin: Optional[List[ObjectId]] = []
 
     @classmethod
     async def validate_login(cls, login: str, password: str):
@@ -49,7 +45,6 @@ class Student(Document):
             "name": self.name,
             "email": self.email,
             "status": self.status,
-            "online": self.online,
             "login": self.login
         }
 
@@ -59,5 +54,5 @@ class Student(Document):
     class Config:
         arbitrary_types_allowed = True
         json_encoders = {
-            ObjectId: dict
+            ObjectId: str
         }
