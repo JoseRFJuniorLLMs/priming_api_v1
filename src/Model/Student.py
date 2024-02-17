@@ -15,24 +15,24 @@ class Student(Document):
     login: str
     password: str
     status: StatusOnline = StatusOnline.ACTIVE
-    course: List[ObjectId] = []
-    lesson_done: List[ObjectId] = []
+    courses: List[ObjectId] = []
+    lessons_done: List[ObjectId] = []
     scheduled_lessons: List[ObjectId] = []
     books: List[ObjectId] = []
     list_word_text: List[ObjectId] = []
-    gender: str
-    phone: str
-    end: str
-    country: str
-    city: str
-    spoken_language: str
-    linkedin: str
-    facebook: str
-    instagram: str
-    tiktok: str
-    x: str
-    image_url: str
-    date_create: str
+    # gender: Optional[str]
+    # phone: Optional[str]
+    # end: Optional[str]
+    # country: Optional[str]
+    # city: Optional[str]
+    # spoken_language: Optional[str]
+    # linkedin: Optional[str]
+    # facebook: Optional[str]
+    # instagram: Optional[str]
+    # tiktok: Optional[str]
+    # x: Optional[str]
+    # image_url: Optional[str]
+    # date_create: Optional[str]
     bitcoin: List[ObjectId] = []
 
     @classmethod
@@ -45,7 +45,6 @@ class Student(Document):
             "name": self.name,
             "email": self.email,
             "status": self.status,
-            "online": self.online,
             "login": self.login
         }
 
@@ -55,5 +54,5 @@ class Student(Document):
     class Config:
         arbitrary_types_allowed = True
         json_encoders = {
-            ObjectId: dict
+            ObjectId: str
         }
