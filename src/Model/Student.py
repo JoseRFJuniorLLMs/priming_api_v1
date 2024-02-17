@@ -15,11 +15,11 @@ class Student(Document):
     login: str
     password: str
     status: StatusOnline = StatusOnline.ACTIVE
-    courses: List[ObjectId] = []
-    lessons_done: List[ObjectId] = []
-    scheduled_lessons: List[ObjectId] = []
-    books: List[ObjectId] = []
-    list_word_text: List[ObjectId] = []
+    courses: Optional[List[ObjectId]] = []
+    lessons_done: Optional[List[ObjectId]] = []
+    scheduled_lessons: Optional[List[ObjectId]] = []
+    books: Optional[List[ObjectId]] = []
+    list_word_text: Optional[List[ObjectId]] = []
     # gender: Optional[str]
     # phone: Optional[str]
     # end: Optional[str]
@@ -33,7 +33,7 @@ class Student(Document):
     # x: Optional[str]
     # image_url: Optional[str]
     # date_create: Optional[str]
-    bitcoin: List[ObjectId] = []
+    bitcoin: Optional[List[ObjectId]] = []
 
     @classmethod
     async def validate_login(cls, login: str, password: str):
