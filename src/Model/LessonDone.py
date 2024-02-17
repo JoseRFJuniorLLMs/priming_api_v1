@@ -15,12 +15,11 @@ class LessonDone(Document):
     status_lesson: StatusLesson = StatusLesson.PENDING
     lesson: [ObjectId]
 
-class Settings:
-    name = "LessonDoneCollection"
+    class Settings:
+        name = "LessonDoneCollection"
 
-
-class Config:
-    arbitrary_types_allowed = True
-    json_encoders = {
-        ObjectId: dict
-    }
+    class Config:
+        arbitrary_types_allowed = True
+        json_encoders = {
+            ObjectId: dict
+        }

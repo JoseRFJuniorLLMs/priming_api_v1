@@ -1,4 +1,3 @@
-
 from beanie import Document
 from src.Model.Type import Type
 
