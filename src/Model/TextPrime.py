@@ -8,7 +8,10 @@ class TextPrime(Document):
     prime: str
     target: str
     text: str
+<<<<<<< HEAD
 
     class Settings:
         name = "primeTargetTextCollection"
 
+=======
+>>>>>>> origin/main

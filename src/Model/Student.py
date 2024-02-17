@@ -1,9 +1,14 @@
 from beanie import Document
 from bson import ObjectId
 from typing import List, Optional
+<<<<<<< HEAD
 from pydantic import datetime_parse
 
 from src.Model.StatusOnline import StatusOnline
+=======
+
+from src.Model.Status import Status
+>>>>>>> origin/main
 
 
 class Student(Document):
@@ -11,6 +16,7 @@ class Student(Document):
     name: str
     email: str
     tax_ident_number: str
+<<<<<<< HEAD
     personal_ident_number: str
     login: str
     password: str
@@ -34,6 +40,13 @@ class Student(Document):
     # image_url: Optional[str]
     # date_create: Optional[str]
     bitcoin: Optional[List[ObjectId]] = []
+=======
+    login: str
+    password: str
+    status: Status = Status.ACTIVE
+    course: List[ObjectId] = []
+    lesson_done: List[ObjectId] = []
+>>>>>>> origin/main
 
     @classmethod
     async def validate_login(cls, login: str, password: str):
@@ -54,5 +67,9 @@ class Student(Document):
     class Config:
         arbitrary_types_allowed = True
         json_encoders = {
+<<<<<<< HEAD
             ObjectId: str
+=======
+            ObjectId: dict
+>>>>>>> origin/main
         }

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 from fastapi import APIRouter, Depends, HTTPException, status
+=======
+from fastapi import APIRouter, Depends
+>>>>>>> origin/main
 from src.Model.Student import Student
 from src.Service.StudentService import StudentService
 from src.Service.LoginService import LoginService
@@ -17,6 +21,7 @@ async def get_student_by_username(username: str, current_user: str = Depends(Log
 
 
 @app.delete("/{username}", status_code=204)
+<<<<<<< HEAD
 async def delete_student(username: str, current_user: str = Depends(LoginService.get_current_user)):
     student = await Student.find_one({"login": username})
     if not student:
@@ -42,3 +47,14 @@ async def update_student(username: str, student: Student, current_user: str = De
 
     updated_student = await StudentService.update(db_student, student)
     return updated_student
+=======
+async def delete_student(username: str):
+    # ! todo
+    pass
+
+
+@app.patch("/{username}", response_model=Student)
+async def update_student(username: str, student:Student):
+    # ! TODO
+    pass
+>>>>>>> origin/main
