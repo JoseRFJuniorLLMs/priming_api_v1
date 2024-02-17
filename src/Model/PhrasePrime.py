@@ -4,8 +4,7 @@ from beanie import Document
 
 
 class PhrasePrime(Document):
-    _id: Optional[int] = None
-    # prime: ObjectId = ObjectId()
+    _id: Optional[ObjectId] = None
     prime: str
     target: str
     phrase: List[str]

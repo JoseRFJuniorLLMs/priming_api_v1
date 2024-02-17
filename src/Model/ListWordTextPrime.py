@@ -10,7 +10,7 @@ class ListWordTextPrime(Document):
     total: int
 
     class Settings:
-        name = "primeTargetListWordTextCollecion"
+        name = "primeTargetListWordTextCollection"
 
     class Config:
         arbitrary_types_allowed = True
