@@ -51,3 +51,4 @@ async def update_student(username: str, student: Student, current_user: str = De
 
     updated_student = await StudentService.update(db_student, student)
     return updated_student
+
