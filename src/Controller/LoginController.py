@@ -1,12 +1,14 @@
 from fastapi import APIRouter, HTTPException, Depends, status
-from fastapi.security import OAuth2PasswordBearer
 from datetime import timedelta
+
+from starlette.requests import Request
+from starlette.responses import RedirectResponse
 
 from src.Model.Login import Login
 from src.Service.LoginService import LoginService
+from src.Handler.GoogleHandler import GoogleHandler
 
 app = APIRouter()
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
 
 @app.post("/login")
@@ -26,17 +28,29 @@ async def login(login_data: Login):
     )
 
 
-@app.post("/logout")
-async def logout():
-    # !Todo
-    return {"message": "Logged out successfully"}
+@app.get("/logout")
+async def logout(request: Request):
+    return await LoginService.logout(request=request)
 
 
-@app.post("/auth")
-async def login_with_google(token: str = Depends(oauth2_scheme)):
-    # !Todo
-    raise HTTPException(
-        status_code=status.HTTP_501_NOT_IMPLEMENTED,
-        detail="Authentication with Google is not implemented yet",
-    )
+@app.get("/auth")
+async def start_google_auth(request: Request):
+    authorization_url, state = GoogleHandler.FLOW.authorization_url()
+    request.session["state"] = state
+    return RedirectResponse(authorization_url)
 
+
+@app.get("/callback")
+async def google_auth_callback(request: Request, state: str, code: str):
+    if state != request.session.get("state"):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid state",
+        )
+
+    GoogleHandler.FLOW.fetch_token(code=code)
+    credentials = GoogleHandler.FLOW.credentials
+
+    request.session["token"] = credentials.to_json()
+
+    return {"message": "Authentication successful"}

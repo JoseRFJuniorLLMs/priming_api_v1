@@ -1,17 +1,37 @@
 from datetime import timedelta, datetime
+from functools import wraps
+
 from fastapi import HTTPException, status, Depends
 from fastapi.security import OAuth2PasswordBearer
 from jose import jwt, JWTError
+from pydantic import BaseModel
+from starlette.requests import Request
+from starlette.responses import RedirectResponse
+import logging
 
+from src.Handler.GoogleHandler import GoogleHandler
 from src.Model.StatusOnline import StatusOnline
 from src.Model.Student import Student
 from src.Service.StudentService import StudentService
 
+# Environment variables for sensitive data
+import os
+
+
+class TokenData(BaseModel):
+    username: str
+
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
 
 class LoginService:
-    ACCESS_TOKEN_EXPIRE_DAYS = 30
-    SECRET_KEY = "your-secret-key"
+    SECRET_KEY = 'SECRET_KEY'
     ALGORITHM = "HS256"
+    ACCESS_TOKEN_EXPIRE_DAYS = 30
+    oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login")
 
     # Função para criar um token JWT
     def create_access_token(self, data: dict, expires_delta: timedelta):
@@ -28,24 +48,64 @@ class LoginService:
             student.status = "ACTIVE"
             await student.save()
         if not student:
-            raise HTTPException(status_code=401, detail="Invalid credentials")
-
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials")
         return student
 
-    @staticmethod
-    async def get_current_user(token: str = Depends(OAuth2PasswordBearer(tokenUrl="login"))):
+    async def get_current_user(self, token: str = Depends(oauth2_scheme)):
         credentials_exception = HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Could not validate credentials",
             headers={"WWW-Authenticate": "Bearer"},
         )
         try:
-            payload = jwt.decode(token, LoginService().SECRET_KEY, algorithms=[LoginService().ALGORITHM])
+            payload = jwt.decode(token, self.SECRET_KEY, algorithms=[self.ALGORITHM])
             if payload is None:
                 raise credentials_exception
         except JWTError:
             raise credentials_exception
 
-        # Aqui você pode fazer a lógica para buscar o usuário no banco de dados, por exemplo
-        student = await StudentService.get_student_by_login(payload["sub"])
-        return student.__str__()
+        username = payload["sub"]
+        student = await StudentService.get_student_by_login(username)
+
+        if not student:
+            raise credentials_exception
+
+        return student
+
+    def validate_login_or_google(func):
+        @wraps(func)
+        async def wrapper(request: Request, *args, **kwargs):
+            # Check for login token
+            if "Authorization" in request.headers:
+                token = request.headers["Authorization"].split(" ")[1]
+                try:
+                    await LoginService().get_current_user(token)
+                except Exception:
+                    raise HTTPException(
+                        status_code=status.HTTP_401_UNAUTHORIZED,
+                        detail="Invalid login token",
+                    )
+
+            # Check for Google token
+            elif request.session:
+                try:
+                    GoogleHandler.verify_token(request.session)
+                except Exception:
+                    print(91)
+                    raise HTTPException(
+                        status_code=status.HTTP_401_UNAUTHORIZED,
+                        detail="Invalid Google authentication token",
+                    )
+
+            # If no token is provided, raise an error
+            else:
+                print(90)
+                raise HTTPException(
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    detail="No authentication token provided",
+                )
+
+            return await func(request, *args, **kwargs)  # Ajuste aqui
+
+        return wrapper
+
