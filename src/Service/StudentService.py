@@ -17,3 +17,9 @@ class StudentService:
         await student.insert()
         await student.save()
         return student
+
+    @staticmethod
+    async def get_students_paginated(page: int, page_size: int):
+        skip = page * page_size
+        students = await Student.find().skip(skip).limit(page_size).to_list(length=page_size)
+        return students
