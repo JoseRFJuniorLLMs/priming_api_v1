@@ -4,7 +4,17 @@ from bson import ObjectId
 import datetime
 from Model.WordLearningInfo import WordLearningInfo
 from Model.ListWordDone import ListWordDone
-
+"""
+Lógica: O sistema de revisão espaçada (SRS) foi criado por Piotr Wozniak
+    Obtém a data e hora atuais.
+    Calcula pontos no futuro para as próximas revisões: 1 hora depois, 1 dia depois, 1 semana depois e 1 mês (aproximado) depois.
+    Cria um objeto WordLearningInfo contendo:
+    A palavra
+    Hora da revisão atual (last_reviewed)
+    Hora da próxima revisão (next_review) - uma das possíveis datas calculadas
+    O nível de dificuldade atual.
+    Salva (provavelmente insere ou atualiza) as informações da palavra (WordLearningInfo) no banco de dados.
+"""
 class ListWordDoneRepository:
     @staticmethod
     async def find_by_student(student_id: ObjectId):
