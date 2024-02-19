@@ -39,7 +39,6 @@ async def delete_student(username: str, current_user: str = Depends(LoginService
     await student.delete()
     return
 
-
 @app.patch("/{username}", response_model=Student)
 async def update_student(username: str, student: Student, current_user: str = Depends(LoginService.get_current_user)):
     db_student = await Student.find_one({"login": username})
