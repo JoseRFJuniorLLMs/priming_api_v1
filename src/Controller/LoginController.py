@@ -54,3 +54,8 @@ async def google_auth_callback(request: Request, state: str, code: str):
     request.session["token"] = credentials.to_json()
 
     return {"message": "Authentication successful"}
+
+
+@app.get("/")
+async def index():
+    return {"message": "hello world"}
