@@ -5,6 +5,6 @@ from src.Service.LessonService import LessonService
 app = APIRouter()
 
 
-@app.get("/")
+@app.get("/list")
 async def lessons_by_course():
     return {"lessons": LessonService.get_lessons()}
