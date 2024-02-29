@@ -12,13 +12,14 @@ app = APIRouter()
 
 
 @app.post("/login")
-async def login(login_data: Login):
+async def login(login_data: Login, request: Request):
     user = await LoginService.login(login_data)
 
     if user:
         access_token_expires = timedelta(days=LoginService().ACCESS_TOKEN_EXPIRE_DAYS)
         access_token = LoginService().create_access_token(data={"sub": login_data.username},
                                                           expires_delta=access_token_expires)
+        request.session["Authorization"] = access_token
         return {"access_token": access_token, "token_type": "bearer"}
 
     raise HTTPException(
