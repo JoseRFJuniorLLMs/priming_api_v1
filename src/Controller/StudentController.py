@@ -26,8 +26,8 @@ async def create_student(student: Student, current_user: str = Depends(get_curre
 
 
 @app.get("/page", response_model=List[Student], status_code=200)
-async def get_students_paginated(page: int = Query(DEFAULT_PAGE, ge=0),
-                                 page_size: int = Query(DEFAULT_PAGE_SIZE, le=100),
+async def get_students_paginated(page: int = 0,
+                                 page_size: int = 10,
                                  current_user: str = Depends(LoginService.get_current_user)):
     students = await StudentService.get_students_paginated(page, page_size)
     return students
