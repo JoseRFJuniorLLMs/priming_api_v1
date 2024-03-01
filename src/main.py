@@ -7,6 +7,10 @@ from src.Model.Student import Student
 from src.Model.Login import Login
 from src.Controller import LoginController, StudentController, LessonController, CourseController
 from src.Service.LoginService import LoginService
+from logger import config_log
+
+# Configurando o log
+config_log()
 
 app = FastAPI()
 app.add_middleware(SessionMiddleware, secret_key="secret")

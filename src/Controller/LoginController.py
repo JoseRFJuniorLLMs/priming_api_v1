@@ -8,6 +8,8 @@ from src.Model.Login import Login
 from src.Service.LoginService import LoginService
 from src.Handler.GoogleHandler import GoogleHandler
 
+from logger import log
+
 app = APIRouter()
 
 """
@@ -101,4 +103,5 @@ Rota "raiz", provavelmente apenas para teste. Retorna uma mensagem simples.
 """
 @app.get("/")
 async def index():
+    log().info("Welcome!!")
     return {"message": "hello world"}

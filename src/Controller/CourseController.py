@@ -4,7 +4,7 @@ from beanie import PydanticObjectId
 from src.Model.Course import Course
 from src.Service.LoginService import LoginService
 from src.Service.CourseService import CourseService
-
+from logger import log
 
 app = APIRouter()
 
@@ -19,30 +19,31 @@ async def create_course(course: Course, current_user: str = Depends(get_current_
 
 
 @app.get("/", response_model=List[Course], status_code=200)
-async def get_all_courses(current_user: str = Depends(LoginService.get_current_user)):
+async def get_all_courses(current_user: str = Depends(get_current_user)):
     return await CourseService.get_all_courses()
 
 
-@app.get("/{course_id}", response_model=Course, status_code=200)
-async def get_course(course_id: PydanticObjectId, current_user: str = Depends(get_current_user)):
-    course = await CourseService.get_course(course_id)
+
+@app.get("/{_id}", response_model=Course, status_code=200)
+async def get_course(_id: PydanticObjectId, current_user: str = Depends(get_current_user)):
+    course = await CourseService.get_course(_id)
     if not course:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Course not found")
     return course
 
 
-@app.delete("/{course_id}", status_code=204)
-async def delete_course(course_id: PydanticObjectId, current_user: str = Depends(get_current_user)):
-    course = await CourseService.get_course(course_id)
+@app.delete("/{_id}", status_code=204)
+async def delete_course(_id: PydanticObjectId, current_user: str = Depends(get_current_user)):
+    course = await CourseService.get_course(_id)
     if not course:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Course not found")
     await course.delete()
     return
 
 
-@app.patch("/{course_id}", response_model=Course)
-async def update_course(course_id: PydanticObjectId, course: Course, current_user: str = Depends(get_current_user)):
-    db_course = await CourseService.get_course(course_id)
+@app.patch("/{_id}", response_model=Course)
+async def update_course(_id: PydanticObjectId, course: Course, current_user: str = Depends(get_current_user)):
+    db_course = await CourseService.get_course(_id)
     if not db_course:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Course not found")
     updated_course = await CourseService.update_course(db_course, course)
