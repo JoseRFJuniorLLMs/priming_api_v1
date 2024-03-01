@@ -1,10 +1,10 @@
 from typing import List, Optional
-from beanie import Document
+from beanie import Document, PydanticObjectId
 from bson import ObjectId
 
 
 class ListWordTextPrime(Document):
-    _id: Optional[int] = None
+    _id: Optional[PydanticObjectId] = None
     list_word: List[str]
     text_prime: [ObjectId]
     total: int

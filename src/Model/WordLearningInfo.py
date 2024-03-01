@@ -1,10 +1,11 @@
 from typing import Optional
-from beanie import Document
+from beanie import Document, PydanticObjectId
 from bson import ObjectId
 import datetime
 
+
 class WordLearningInfo(Document):
-    _id: Optional[ObjectId] = None
+    _id: Optional[PydanticObjectId] = None
     word: str
     last_reviewed: datetime.datetime
     difficulty: int

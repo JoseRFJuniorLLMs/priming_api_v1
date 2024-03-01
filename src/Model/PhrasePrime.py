@@ -1,10 +1,10 @@
 from typing import Optional, List
 from bson import ObjectId
-from beanie import Document
+from beanie import Document, PydanticObjectId
 
 
 class PhrasePrime(Document):
-    _id: Optional[ObjectId] = None
+    _id: Optional[PydanticObjectId] = None
     prime: str
     target: str
     phrase: List[str]

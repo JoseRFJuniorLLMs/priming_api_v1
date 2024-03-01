@@ -1,12 +1,12 @@
 from typing import List, Optional
-from beanie import Document
-from bson import ObjectId
+from beanie import Document, PydanticObjectId
+
 
 from src.Model.StatusOnline import StatusOnline
 
 
 class Course(Document):
-    _id: Optional[ObjectId] = None
+    _id: Optional[PydanticObjectId] = None
     name: str
     objective: str
     content: List[str]

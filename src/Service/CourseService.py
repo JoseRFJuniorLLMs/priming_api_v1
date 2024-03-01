@@ -27,8 +27,8 @@ class CourseService:
         return courses
 
     @staticmethod
-    async def get_course(course_id: PydanticObjectId):
-        course = await Course.get(course_id)
+    async def get_course(_id: PydanticObjectId):
+        course = await Course.get(_id)
         return course
 
     @staticmethod

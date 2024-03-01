@@ -1,4 +1,4 @@
-from beanie import Document
+from beanie import Document, PydanticObjectId
 from bson import ObjectId
 from typing import List, Optional
 from pydantic import datetime_parse
@@ -7,7 +7,7 @@ from src.Model.StatusOnline import StatusOnline
 
 
 class Student(Document):
-    _id: Optional[str]
+    _id: Optional[PydanticObjectId] = None
     name: str
     email: str
     tax_ident_number: str

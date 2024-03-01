@@ -1,14 +1,14 @@
 import datetime
 import time
 
-from beanie import Document
+from beanie import Document, PydanticObjectId
 from bson import ObjectId
 from typing import List, Optional
 from src.Model.StatusLesson import StatusLesson
 
 
 class LessonDone(Document):
-    id: Optional[int] = None
+    _id: Optional[PydanticObjectId] = None
     start: time
     end: time
     status_lesson: StatusLesson = StatusLesson.PENDING

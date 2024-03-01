@@ -5,7 +5,7 @@ from starlette.middleware.sessions import SessionMiddleware
 
 from src.Model.Student import Student
 from src.Model.Login import Login
-from src.Controller import LoginController, StudentController, LessonController
+from src.Controller import LoginController, StudentController, LessonController, CourseController
 from src.Service.LoginService import LoginService
 
 app = FastAPI()
@@ -21,10 +21,13 @@ async def startup_event():
 # Include student routes
 app.include_router(StudentController.app, prefix="/student", tags=["students"])
 
-# Include login routes
+# Include login routesm
 app.include_router(LoginController.app, prefix="", tags=["login"])
 
 app.include_router(LessonController.app, prefix="/lessons", tags=["lessons"])
+
+# Include your APIRouter for courses
+app.include_router(CourseController.app, prefix="/course", tags=["courses"])
 
 if __name__ == "__main__":
     import uvicorn

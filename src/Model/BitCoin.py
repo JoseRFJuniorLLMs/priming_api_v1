@@ -1,11 +1,10 @@
 import datetime
 from typing import List, Optional
-from beanie import Document
-from bson import ObjectId
+from beanie import Document, PydanticObjectId
 
 
 class BitCoin(Document):
-    _id: Optional[ObjectId] = None
+    _id: Optional[PydanticObjectId] = None
     name: str
     description: str
     primeCoinValue: float

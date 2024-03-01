@@ -1,4 +1,4 @@
-from beanie import Document
+from beanie import Document, PydanticObjectId
 from typing import Optional, List
 
 from src.Model.Course import Course
@@ -6,7 +6,7 @@ from src.Model.Module import Module
 
 
 class Classroom(Document):
-    _id: Optional[int] = None
+    _id: Optional[PydanticObjectId] = None
     studentId: str
     course: Course
     module: List[Module]

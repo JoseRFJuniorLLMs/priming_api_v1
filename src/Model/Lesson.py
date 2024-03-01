@@ -1,11 +1,11 @@
 from datetime import datetime
 from typing import Optional, List
-from beanie import Document
+from beanie import Document, PydanticObjectId
 from bson import ObjectId
 
 
 class Lesson(Document):
-    id: Optional[int] = None
+    _id: Optional[PydanticObjectId] = None
     name: str
     prime: ObjectId = ObjectId
     youtubeUrl: ObjectId = ObjectId

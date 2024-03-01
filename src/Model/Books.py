@@ -1,13 +1,9 @@
 from typing import List, Optional
-from beanie import Document
-from bson import ObjectId
-
-from src.Model.Course import Course
-from src.Model.Module import Module
+from beanie import Document, PydanticObjectId
 
 
 class Books(Document):
-    _id: Optional[ObjectId] = None
+    _id: Optional[PydanticObjectId] = None
     title: str
     author: str
     isbn: str
