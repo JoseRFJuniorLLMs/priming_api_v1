@@ -21,5 +21,5 @@ class StudentService:
     @staticmethod
     async def get_students_paginated(page: int, page_size: int):
         skip = page * page_size
-        students = Student.find_all(skip=skip, limit=page_size)
+        students = await Student.find_all(skip=skip, limit=page_size)
         return students
