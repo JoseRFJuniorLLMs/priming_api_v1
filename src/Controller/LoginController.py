@@ -8,8 +8,6 @@ from src.Model.Login import Login
 from src.Service.LoginService import LoginService
 from src.Handler.GoogleHandler import GoogleHandler
 
-from logger import log
-
 app = APIRouter()
 
 """
@@ -20,6 +18,7 @@ src.Model.Login: Provavelmente contém a definição do modelo de dados "Login",
 src.Service.LoginService: Provavelmente um serviço com métodos para autenticação, criação de tokens e logout.
 src.Handler.GoogleHandler: Provavelmente contém a lógica de integração com a autenticação do Google (OAuth).
 """
+
 
 """
 /login (POST):
@@ -49,14 +48,18 @@ async def login(login_data: Login, request: Request):
         headers={"WWW-Authenticate": "Bearer"},
     )
 
+
 """"
 /logout (GET):
 
 Chama a função LoginService.logout() para invalidar a sessão do usuário.
 """
+
+
 @app.get("/logout")
 async def logout(request: Request):
     return await LoginService.logout(request=request)
+
 
 """
 /auth (GET):
@@ -66,11 +69,14 @@ Usa a função GoogleHandler.FLOW.authorization_url() para gerar o URL de autori
 Armazena o "state" (valor aleatório) na sessão para mitigar ataques CSRF.
 Redireciona o usuário para o URL de autorização do Google.
 """
+
+
 @app.get("/auth")
 async def start_google_auth(request: Request):
     authorization_url, state = GoogleHandler.FLOW.authorization_url()
     request.session["state"] = state
     return RedirectResponse(authorization_url)
+
 
 """
 /callback (GET):
@@ -81,6 +87,8 @@ Usa o GoogleHandler.FLOW.fetch_token() para trocar o código de autorização pe
 Armazena o token na sessão do usuário.
 Retorna uma mensagem de sucesso.
 """
+
+
 @app.get("/callback")
 async def google_auth_callback(request: Request, state: str, code: str):
     if state != request.session.get("state"):
@@ -96,11 +104,14 @@ async def google_auth_callback(request: Request, state: str, code: str):
 
     return {"message": "Authentication successful"}
 
+
 """
 / (GET):
 
 Rota "raiz", provavelmente apenas para teste. Retorna uma mensagem simples.
 """
+
+
 @app.get("/")
 async def index():
     log().info("Welcome!!")

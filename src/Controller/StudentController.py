@@ -46,7 +46,6 @@ async def get_all_students_paginated(page: int = Query(DEFAULT_PAGE, ge=0),
 @LoginService.validate_login_or_google
 async def get_student_by_username(request: Request):
     username = request.path_params["username"]
-    print(username)
     return await Student.find_one({"login": username})
 
 

@@ -7,10 +7,7 @@ from src.Model.StatusOnline import StatusOnline
 
 
 class Student(Document):
-
-    _id: Optional[PydanticObjectId] = None
-    student_id: Optional[str] = Field(alias="_id")
-
+    _id: ObjectId()
     name: str
     email: str
     tax_ident_number: str
@@ -51,7 +48,7 @@ class Student(Document):
             "login": self.login
         }
 
-    class Settings:
+    class Config:
         name = "StudentCollection"
         arbitrary_types_allowed = True
         json_encoders = {
