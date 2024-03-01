@@ -1,13 +1,16 @@
 from beanie import Document, PydanticObjectId
 from bson import ObjectId
 from typing import List, Optional
-from pydantic import datetime_parse
+from pydantic import datetime_parse, Field
 
 from src.Model.StatusOnline import StatusOnline
 
 
 class Student(Document):
+
     _id: Optional[PydanticObjectId] = None
+    student_id: Optional[str] = Field(alias="_id")
+
     name: str
     email: str
     tax_ident_number: str
@@ -50,9 +53,8 @@ class Student(Document):
 
     class Settings:
         name = "StudentCollection"
-
-    class Config:
         arbitrary_types_allowed = True
         json_encoders = {
-            ObjectId: str
+            PydanticObjectId: str
         }
+        id_field = "student_id"

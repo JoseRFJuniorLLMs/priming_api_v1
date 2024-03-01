@@ -21,4 +21,4 @@ class PhrasePrime(Document):
         json_encoders = {
             PydanticObjectId: str
         }
-        id_field = "module_id"
+        id_field = "phrase_id"
