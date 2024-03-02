@@ -19,7 +19,6 @@ src.Service.LoginService: Provavelmente um serviço com métodos para autentica�
 src.Handler.GoogleHandler: Provavelmente contém a lógica de integração com a autenticação do Google (OAuth).
 """
 
-
 """
 /login (POST):
 Recebe as credenciais do usuário (login_data).
@@ -34,12 +33,10 @@ Lança uma HTTPException (com status 401 - Unauthorized).
 @app.post("/login")
 async def login(login_data: Login, request: Request):
     user = await LoginService.login(login_data)
-
     if user:
         access_token_expires = timedelta(days=LoginService().ACCESS_TOKEN_EXPIRE_DAYS)
         access_token = LoginService().create_access_token(data={"sub": login_data.username},
                                                           expires_delta=access_token_expires)
-        request.session["Authorization"] = access_token
         return {"access_token": access_token, "token_type": "bearer"}
 
     raise HTTPException(
@@ -114,5 +111,4 @@ Rota "raiz", provavelmente apenas para teste. Retorna uma mensagem simples.
 
 @app.get("/")
 async def index():
-    log().info("Welcome!!")
     return {"message": "hello world"}
