@@ -6,16 +6,10 @@ from fastapi.security import OAuth2PasswordBearer
 from jose import jwt, JWTError
 from pydantic import BaseModel
 from starlette.requests import Request
-from starlette.responses import RedirectResponse
-import logging
 
 from src.Handler.GoogleHandler import GoogleHandler
-from src.Model.StatusOnline import StatusOnline
-from src.Model.Student import Student
+from src.Repository.StudentRepository import StudentRepository
 from src.Service.StudentService import StudentService
-
-# Environment variables for sensitive data
-import os
 
 
 class TokenData(BaseModel):
@@ -39,14 +33,12 @@ class LoginService:
         expire = datetime.utcnow() + expires_delta
         to_encode.update({"exp": expire})
         encoded_jwt = jwt.encode(to_encode, self.SECRET_KEY, algorithm=self.ALGORITHM)
+        print(encoded_jwt)
         return encoded_jwt
 
     @staticmethod
     async def login(login_data):
-        student = await Student.validate_login(login_data.username, login_data.password)
-        if student.status == StatusOnline.INACTIVE:
-            student.status = "ACTIVE"
-            await student.save()
+        student = StudentRepository.validate_login(login_data.username, login_data.password)
         if not student:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials")
         return student
@@ -91,7 +83,6 @@ class LoginService:
                 try:
                     GoogleHandler.verify_token(request.session)
                 except Exception:
-                    print(91)
                     raise HTTPException(
                         status_code=status.HTTP_401_UNAUTHORIZED,
                         detail="Invalid Google authentication token",
@@ -99,7 +90,6 @@ class LoginService:
 
             # If no token is provided, raise an error
             else:
-                print(90)
                 raise HTTPException(
                     status_code=status.HTTP_401_UNAUTHORIZED,
                     detail="No authentication token provided",
