@@ -1,13 +1,15 @@
-from beanie import Document, PydanticObjectId
-from bson import ObjectId
+from beanie import Document
+from beanie import PydanticObjectId
 from typing import List, Optional
-from pydantic import datetime_parse, Field
+from pydantic import Field
 
 from src.Model.StatusOnline import StatusOnline
 
 
 class Student(Document):
-    _id: ObjectId()
+    _id: PydanticObjectId()
+    student_id: Optional[str] = Field(alias='_id')
+
     name: str
     email: str
     tax_ident_number: str
@@ -15,11 +17,11 @@ class Student(Document):
     login: str
     password: str
     status: StatusOnline = StatusOnline.ACTIVE
-    courses: Optional[List[ObjectId]] = []
-    lessons_done: Optional[List[ObjectId]] = []
-    scheduled_lessons: Optional[List[ObjectId]] = []
-    books: Optional[List[ObjectId]] = []
-    list_word_text: Optional[List[ObjectId]] = []
+    courses: Optional[List[PydanticObjectId]] = []
+    lessons_done: Optional[List[PydanticObjectId]] = []
+    scheduled_lessons: Optional[List[PydanticObjectId]] = []
+    books: Optional[List[PydanticObjectId]] = []
+    list_word_text: Optional[List[PydanticObjectId]] = []
     gender: Optional[str]
     phone: Optional[str]
     end: Optional[str]
@@ -33,12 +35,7 @@ class Student(Document):
     x: Optional[str]
     image_url: Optional[str]
     date_create: Optional[str]
-    bitcoin: Optional[List[ObjectId]] = []
-
-    @classmethod
-    async def validate_login(cls, login: str, password: str):
-        student = await cls.find_one({"login": login, "password": password})
-        return student
+    bitcoin: Optional[List[PydanticObjectId]] = []
 
     def __str__(self):
         return {
