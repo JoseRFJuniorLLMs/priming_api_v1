@@ -5,6 +5,7 @@ from fastapi.params import Query
 from starlette.requests import Request
 
 from src.Model.Student import Student
+from src.Repository.StudentRepository import StudentRepository
 from src.Service.LoginService import LoginService
 from src.Service.StudentService import StudentService
 
@@ -43,10 +44,10 @@ async def get_all_students_paginated(page: int = Query(DEFAULT_PAGE, ge=0),
 
 
 @app.get("/{username}", response_model=Student, status_code=200)
-@LoginService.validate_login_or_google
-async def get_student_by_username(request: Request):
+async def get_student_by_username(request: Request, current_user: str = Depends(get_current_user)):
     username = request.path_params["username"]
-    return await Student.find_one({"login": username})
+    student = StudentRepository.get_student_by_login(username)
+    return student
 
 
 @app.delete("/{username}", status_code=204)
