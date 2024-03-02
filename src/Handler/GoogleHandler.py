@@ -36,8 +36,6 @@ class GoogleHandler:
 
         except Exception as e:
 
-            print(f"Error verifying Google token: {e}")
-
             raise HTTPException(
 
                 status_code=status.HTTP_401_UNAUTHORIZED,
