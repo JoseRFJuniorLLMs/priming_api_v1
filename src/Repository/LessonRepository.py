@@ -7,7 +7,7 @@ class LessonRepository:
     def get_lessons_by_course(course_id):
         db = connection()
 
-        course_id =  ObjectId(course_id)
+        course_id = ObjectId(course_id)
 
         # Agregação para unir as coleções e buscar os documentos das lições
         pipeline = [
@@ -23,8 +23,7 @@ class LessonRepository:
                 '_id': 0,
                 'lesson_id': '$lesson_details._id',
                 'course_name': '$name',
-                'lesson_name': '$lesson_details.name',
-                'lesson_description': '$lesson_details.description'
+                'lesson_name': '$lesson_details.name'
             }}
         ]
 
