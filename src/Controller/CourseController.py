@@ -4,7 +4,6 @@ from beanie import PydanticObjectId
 from src.Model.Course import Course
 from src.Service.LoginService import LoginService
 from src.Service.CourseService import CourseService
-from src.Repository.CourseRepository import CourseRepository
 
 app = APIRouter()
 

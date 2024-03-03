@@ -61,7 +61,7 @@ class LoginService:
         if not student:
             raise credentials_exception
 
-        return student
+        return await student
 
     def validate_login_or_google(func):
         @wraps(func)
