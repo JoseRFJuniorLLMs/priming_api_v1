@@ -52,6 +52,16 @@ GET /lesson/{lesson_id}
 
 - Retrieve information about a specific lesson based on the provided lesson ID.
 
+### COURSES
+
+GET /course/
+
+- Get all courses
+
+GET /course/{course_id}
+
+- Retrieve information about a course based on the provided id.
+
 ## Running the Project
 ### To run the project, follow these steps:
 
