@@ -18,9 +18,10 @@ class Course(Document):
     level: str
     price: Decimal
     status: StatusOnline = StatusOnline.ACTIVE
-    start: str
-    end: str
-    duration_month: int
+    lessons: List[PydanticObjectId]
+    # start: str
+    # end: str
+    # duration_month: int
 
     class Settings:
         name = "CourseCollection"

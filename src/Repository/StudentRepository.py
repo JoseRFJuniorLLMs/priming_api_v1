@@ -7,9 +7,7 @@ class StudentRepository:
         db = connection()
         query = {"login": username, "password": password}
 
-        student = db.StudentCollection.find(query)
-        for student in student:
-            student = student
+        student = db.StudentCollection.find_one(query)
         return student
 
     @staticmethod

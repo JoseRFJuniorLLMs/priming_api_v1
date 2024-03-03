@@ -5,6 +5,7 @@ from starlette.middleware.sessions import SessionMiddleware
 
 from src.Model.Student import Student
 from src.Model.Login import Login
+from src.Model.Course import Course
 from src.Controller import LoginController, StudentController, LessonController, CourseController, LessonDoneController
 from src.Service.LoginService import LoginService
 
@@ -15,7 +16,7 @@ app.add_middleware(SessionMiddleware, secret_key="secret")
 @app.on_event("startup")
 async def startup_event():
     client = AsyncIOMotorClient("mongodb+srv://junior:debian23@prime.0zjimdw.mongodb.net/?retryWrites=true&w=majority")
-    await init_beanie(database=client['primeDB'], document_models=[Login, Student])
+    await init_beanie(database=client['primeDB'], document_models=[Login, Student, Course])
 
 
 # Include student routes

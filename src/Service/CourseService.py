@@ -1,12 +1,15 @@
 from beanie import PydanticObjectId
 
 from src.Model.Course import Course
+from src.Repository.CourseRepository import CourseRepository
 
 
 class CourseService:
-    @staticmethod
-    async def get_course_by_name(name: str):
-        course = await Course.find_one({"name": name})
+    def __init__(self):
+        self.repository = CourseRepository()
+
+    async def get_course_by_name(self, name: str):
+        course = await self.repository.get_course_by_name(name)
         return course
 
     @staticmethod
@@ -21,14 +24,17 @@ class CourseService:
         courses = await Course.find_all(skip=skip, limit=page_size)
         return courses
 
-    @staticmethod
-    async def get_all_courses():
-        courses = await Course.find_all()
-        return courses
+    async def get_all_courses(self):
+        data = self.repository.get_all_courses()
 
-    @staticmethod
-    async def get_course(_id: PydanticObjectId):
-        course = await Course.get(_id)
+        for item in data:
+            item['_id'] = str(item['_id'])
+
+        return data
+
+    async def get_course(self, _id):
+        course = self.repository.get_course_by_id(_id)
+        course["_id"] = str(course["_id"])
         return course
 
     @staticmethod

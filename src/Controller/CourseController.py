@@ -4,6 +4,7 @@ from beanie import PydanticObjectId
 from src.Model.Course import Course
 from src.Service.LoginService import LoginService
 from src.Service.CourseService import CourseService
+from src.Repository.CourseRepository import CourseRepository
 
 app = APIRouter()
 
@@ -19,13 +20,12 @@ async def create_course(course: Course, current_user: str = Depends(get_current_
 
 @app.get("/", response_model=List[Course], status_code=200)
 async def get_all_courses(current_user: str = Depends(get_current_user)):
-    return await CourseService.get_all_courses()
-
+    return await CourseService().get_all_courses()
 
 
 @app.get("/{_id}", response_model=Course, status_code=200)
 async def get_course(_id: PydanticObjectId, current_user: str = Depends(get_current_user)):
-    course = await CourseService.get_course(_id)
+    course = await CourseService().get_course(_id)
     if not course:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Course not found")
     return course
@@ -33,7 +33,7 @@ async def get_course(_id: PydanticObjectId, current_user: str = Depends(get_curr
 
 @app.delete("/{_id}", status_code=204)
 async def delete_course(_id: PydanticObjectId, current_user: str = Depends(get_current_user)):
-    course = await CourseService.get_course(_id)
+    course = await CourseService().get_course(_id)
     if not course:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Course not found")
     await course.delete()
