@@ -5,7 +5,7 @@ class StudentRepository:
     @staticmethod
     def validate_login(username: str, password: str):
         db = connection()
-        query = {"login": username, "password": password}
+        query = {"email": username, "password": password}
 
         student = db.StudentCollection.find_one(query)
         return student
