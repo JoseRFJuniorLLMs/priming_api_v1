@@ -2,6 +2,7 @@ from typing import List
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.params import Query
+from starlette.middleware.cors import CORSMiddleware
 from starlette.requests import Request
 
 from src.Model.Student import Student
@@ -10,6 +11,15 @@ from src.Service.LoginService import LoginService
 from src.Service.StudentService import StudentService
 
 app = APIRouter()
+
+origins = ["http://localhost:4200"];
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,  # If your API allows cookies
+    allow_methods=["*"],  # Adjust for allowed methods (e.g., GET, POST, PUT, DELETE)
+    allow_headers=["*"])  # Adjust for allowed headers (e.g., Content-Type, Authorization)
 
 DEFAULT_PAGE = 0
 DEFAULT_PAGE_SIZE = 10

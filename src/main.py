@@ -1,15 +1,25 @@
 from fastapi import FastAPI, Depends
 from beanie import init_beanie
 from motor.motor_asyncio import AsyncIOMotorClient
+from starlette.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
 
 from src.Model.Student import Student
 from src.Model.Login import Login
 from src.Model.Course import Course
 from src.Controller import LoginController, StudentController, LessonController, CourseController, LessonDoneController
-from src.Service.LoginService import LoginService
 
 app = FastAPI()
+
+origins = ["http://localhost:4200"];
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,  # If your API allows cookies
+    allow_methods=["*"],  # Adjust for allowed methods (e.g., GET, POST, PUT, DELETE)
+    allow_headers=["*"])  # Adjust for allowed headers (e.g., Content-Type, Authorization)
+
 app.add_middleware(SessionMiddleware, secret_key="secret")
 
 

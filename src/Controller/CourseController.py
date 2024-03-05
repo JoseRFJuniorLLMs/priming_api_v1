@@ -1,12 +1,22 @@
 from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException, status
 from beanie import PydanticObjectId
+from starlette.middleware.cors import CORSMiddleware
+
 from src.Model.Course import Course
 from src.Service.LoginService import LoginService
 from src.Service.CourseService import CourseService
 
 app = APIRouter()
 
+origins = ["http://localhost:4200"];
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,  # If your API allows cookies
+    allow_methods=["*"],  # Adjust for allowed methods (e.g., GET, POST, PUT, DELETE)
+    allow_headers=["*"])  # Adjust for allowed headers (e.g., Content-Type, Authorization)
 
 def get_current_user(token: str = Depends(LoginService().oauth2_scheme)):
     return LoginService().get_current_user(token)

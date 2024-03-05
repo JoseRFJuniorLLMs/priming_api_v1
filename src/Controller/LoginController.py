@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends, status
 from datetime import timedelta
 
+from starlette.middleware.cors import CORSMiddleware
 from starlette.requests import Request
 from starlette.responses import RedirectResponse
 
@@ -9,6 +10,15 @@ from src.Service.LoginService import LoginService
 from src.Handler.GoogleHandler import GoogleHandler
 
 app = APIRouter()
+
+origins = ["http://localhost:4200"];
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,  # If your API allows cookies
+    allow_methods=["*"],  # Adjust for allowed methods (e.g., GET, POST, PUT, DELETE)
+    allow_headers=["*"])  # Adjust for allowed headers (e.g., Content-Type, Authorization)
 
 """
 fastapi: Módulos essenciais para construir a API com o framework FastAPI.
