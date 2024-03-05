@@ -11,7 +11,7 @@ from src.Controller import LoginController, StudentController, LessonController,
 
 app = FastAPI()
 
-origins = ["http://localhost:4200"];
+origins = ["*"]
 
 app.add_middleware(
     CORSMiddleware,
