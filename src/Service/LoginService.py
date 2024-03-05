@@ -27,11 +27,14 @@ class LoginService:
         student = await Student.validate_login(login_data.username, login_data.password)
 
         if student.status == StatusOnline.INACTIVE:
+            # Handle the case when the student status is INACTIVE
+            # For example, you might want to raise an HTTPException
+            raise HTTPException(status_code=403, detail="User is inactive")
 
         if student.status == Status.INACTIVE:
-
             student.status = "ACTIVE"
             await student.save()
+
         if not student:
             raise HTTPException(status_code=401, detail="Invalid credentials")
 

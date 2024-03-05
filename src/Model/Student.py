@@ -67,6 +67,6 @@ class Student(Document):
     class Config:
         arbitrary_types_allowed = True
         json_encoders = {
-            ObjectId: str
+            ObjectId: str,
             ObjectId: dict
         }
