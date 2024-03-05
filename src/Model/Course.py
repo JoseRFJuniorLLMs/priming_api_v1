@@ -1,32 +1,34 @@
-from decimal import Decimal
 from typing import List, Optional
-from beanie import Document, PydanticObjectId
-from pydantic import Field
+from beanie import Document
+from bson import ObjectId
+
 
 from src.Model.StatusOnline import StatusOnline
 
+from src.Model.Status import Status
+
+
 
 class Course(Document):
-
-    _id: Optional[PydanticObjectId] = None
-    course_id: Optional[str] = Field(alias="_id")
-
+    _id: Optional[ObjectId] = None
     name: str
     objective: str
     content: List[str]
+
     category: str
     level: str
-    price: Decimal
+    price: str
     status: StatusOnline = StatusOnline.ACTIVE
-    lessons: List[PydanticObjectId]
-    # start: str
-    # end: str
-    # duration_month: int
+    start: str
+    end: str
+    duration_month: int
 
     class Settings:
         name = "CourseCollection"
-        arbitrary_types_allowed = True
-        json_encoders = {
-            PydanticObjectId: str
-        }
-        id_field = "course_id"
+
+    lessons: List[str]
+    category: str
+    level: str
+    price: str
+    status: Status = Status.ACTIVE
+

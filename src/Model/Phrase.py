@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 
 from beanie import Document
 
@@ -7,7 +7,6 @@ class TextPrime(Document):
     _id: Optional[int] = None
     prime: str
     target: str
-    text: str
-
-    class Settings:
-        name = "primeTargetTextCollection"
+    phrase: List[str]
+    url: List[str]
+    image: List[str]
