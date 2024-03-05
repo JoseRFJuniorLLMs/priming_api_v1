@@ -27,8 +27,8 @@ async def create_student(student: Student, current_user: str = Depends(get_curre
 
 @app.get("/page", response_model=List[Student], status_code=200)
 async def get_students_paginated(page: int = Query(DEFAULT_PAGE, ge=0),
-                                  page_size: int = Query(DEFAULT_PAGE_SIZE, le=100),
-                                  current_user: str = Depends(get_current_user)):
+                                 page_size: int = Query(DEFAULT_PAGE_SIZE, le=100),
+                                 current_user: str = Depends(get_current_user)):
     students = await StudentService.get_students_paginated(page, page_size)
     return students
 
@@ -46,7 +46,7 @@ async def get_all_students_paginated(page: int = Query(DEFAULT_PAGE, ge=0),
 @app.get("/{username}", response_model=Student, status_code=200)
 async def get_student_by_username(request: Request, current_user: str = Depends(get_current_user)):
     username = request.path_params["username"]
-    student = StudentRepository.get_student_by_login(username)
+    student = StudentRepository().get_student_by_login(username)
     return student
 
 
@@ -67,3 +67,12 @@ async def update_student(username: str, student: Student, current_user: str = De
     updated_student = await Student.update(db_student, student)
     return updated_student
 
+
+@app.get("/{student_id}/courses", status_code=200)
+async def get_courses(student_id: str, current_user: str = Depends(get_current_user)):
+    return await StudentService.get_student_courses(student_id)
+
+
+@app.get("/{student_id}/books", status_code=200)
+async def get_books(student_id: str, current_user: str = Depends(get_current_user)):
+    return await StudentService.get_student_books(student_id)
