@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI
 from beanie import init_beanie
 from motor.motor_asyncio import AsyncIOMotorClient
 from starlette.middleware.cors import CORSMiddleware
@@ -16,9 +16,10 @@ origins = ["*"]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
-    allow_credentials=True,  # If your API allows cookies
-    allow_methods=["*"],  # Adjust for allowed methods (e.g., GET, POST, PUT, DELETE)
-    allow_headers=["*"])  # Adjust for allowed headers (e.g., Content-Type, Authorization)
+    allow_credentials=True,  # Se a sua API permite cookies
+    allow_methods=["*"],  # Ajuste para os métodos permitidos (por exemplo, GET, POST, PUT, DELETE)
+    allow_headers=["*"]  # Ajuste para os cabeçalhos permitidos (por exemplo, Content-Type, Authorization)
+)
 
 app.add_middleware(SessionMiddleware, secret_key="secret")
 
@@ -29,18 +30,21 @@ async def startup_event():
     await init_beanie(database=client['primeDB'], document_models=[Login, Student, Course])
 
 
-# Include student routes
+# Inclua as rotas dos alunos
 app.include_router(StudentController.app, prefix="/student", tags=["students"])
 
-# Include login routes
+# Inclua as rotas de login
 app.include_router(LoginController.app, prefix="", tags=["login"])
 
+# Inclua as rotas de lições
 app.include_router(LessonController.app, prefix="/lesson", tags=["lessons"])
 
-# Include your APIRouter for courses
+# Inclua as rotas para cursos
 app.include_router(CourseController.app, prefix="/course", tags=["courses"])
 
+# Inclua as rotas de lições concluídas
 app.include_router(LessonDoneController.app, prefix="/lessonDone", tags=["lessonsDone"])
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="127.0.0.1", port=8000)
