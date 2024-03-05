@@ -6,7 +6,7 @@ from src.Service.LoginService import LoginService
 
 app = APIRouter()
 
-origins = ["http://localhost:4200"];
+origins = ["*"]
 
 app.add_middleware(
     CORSMiddleware,

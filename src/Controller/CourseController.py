@@ -9,7 +9,7 @@ from src.Service.CourseService import CourseService
 
 app = APIRouter()
 
-origins = ["http://localhost:4200"];
+origins = ["*"]
 
 app.add_middleware(
     CORSMiddleware,
