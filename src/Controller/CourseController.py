@@ -51,7 +51,7 @@ async def delete_course(_id: PydanticObjectId, current_user: str = Depends(get_c
 
 @app.patch("/{_id}", response_model=Course)
 async def update_course(_id: PydanticObjectId, course: Course, current_user: str = Depends(get_current_user)):
-    db_course = await CourseService.get_course(_id)
+    db_course = await CourseService().get_course(_id)
     if not db_course:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Course not found")
     updated_course = await CourseService.update_course(db_course, course)
