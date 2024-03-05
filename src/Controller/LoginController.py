@@ -9,95 +9,53 @@ from src.Model.Login import Login
 from src.Service.LoginService import LoginService
 from src.Handler.GoogleHandler import GoogleHandler
 
-app = APIRouter()
+# Create APIRouter instance
+router = APIRouter()
 
+# Configure CORS middleware
 origins = ["*"]
-
-app.add_middleware(
+router.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
-    allow_credentials=True,  # If your API allows cookies
-    allow_methods=["*"],  # Adjust for allowed methods (e.g., GET, POST, PUT, DELETE)
-    allow_headers=["*"])  # Adjust for allowed headers (e.g., Content-Type, Authorization)
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
 
-"""
-fastapi: Módulos essenciais para construir a API com o framework FastAPI.
-datetime: timedelta será usado para gerenciar as durações dos tokens de acesso.
-starlette: Permite gerenciar as requests HTTP e suas respostas.
-src.Model.Login: Provavelmente contém a definição do modelo de dados "Login", representando as credenciais de usuário.
-src.Service.LoginService: Provavelmente um serviço com métodos para autenticação, criação de tokens e logout.
-src.Handler.GoogleHandler: Provavelmente contém a lógica de integração com a autenticação do Google (OAuth).
-"""
-
-"""
-/login (POST):
-Recebe as credenciais do usuário (login_data).
-Chama a função LoginService.login() para validar o login.
-Se bem-sucedido:
-Gera um token de acesso usando LoginService.create_access_token().
-Armazena o token na sessão do usuário.
-Retorna o token de acesso e o tipo de token.
-Se não for bem-sucedido:
-Lança uma HTTPException (com status 401 - Unauthorized).
-"""
-@app.post("/login")
+# Define route handlers
+@router.post("/login")
 async def login(login_data: Login, request: Request):
+    # Authenticate user
     user = await LoginService.login(login_data)
     if user:
+        # Generate access token
         access_token_expires = timedelta(days=LoginService().ACCESS_TOKEN_EXPIRE_DAYS)
         access_token = LoginService().create_access_token(data={"sub": login_data.username},
                                                           expires_delta=access_token_expires)
         return {"access_token": access_token, "token_type": "bearer"}
+    else:
+        # Unauthorized login
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid credentials",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
 
-    raise HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Invalid credentials",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
-
-
-""""
-/logout (GET):
-
-Chama a função LoginService.logout() para invalidar a sessão do usuário.
-"""
-
-
-@app.get("/logout")
+@router.get("/logout")
 async def logout(request: Request):
+    # Logout user
     return await LoginService.logout(request=request)
 
-
-"""
-/auth (GET):
-
-Inicia o processo de autenticação no Google OAuth:
-Usa a função GoogleHandler.FLOW.authorization_url() para gerar o URL de autorização do Google.
-Armazena o "state" (valor aleatório) na sessão para mitigar ataques CSRF.
-Redireciona o usuário para o URL de autorização do Google.
-"""
-
-
-@app.get("/auth")
+@router.get("/auth")
 async def start_google_auth(request: Request):
+    # Start Google OAuth authentication process
     authorization_url, state = GoogleHandler.FLOW.authorization_url()
     request.session["state"] = state
     return RedirectResponse(authorization_url)
 
-
-"""
-/callback (GET):
-
-Endpoint de retorno do Google OAuth, chamado após o usuário autenticar com sucesso.
-Compara o "state" recebido com aquele da sessão para validação.
-Usa o GoogleHandler.FLOW.fetch_token() para trocar o código de autorização pelo token de acesso do Google.
-Armazena o token na sessão do usuário.
-Retorna uma mensagem de sucesso.
-"""
-
-
-@app.get("/callback")
+@router.get("/callback")
 async def google_auth_callback(request: Request, state: str, code: str):
+    # Callback for Google OAuth authentication
     if state != request.session.get("state"):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -111,14 +69,7 @@ async def google_auth_callback(request: Request, state: str, code: str):
 
     return {"message": "Authentication successful"}
 
-
-"""
-/ (GET):
-
-Rota "raiz", provavelmente apenas para teste. Retorna uma mensagem simples.
-"""
-
-
-@app.get("/")
+@router.get("/")
 async def index():
+    # Root route
     return {"message": "hello world"}
