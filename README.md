@@ -1,10 +1,12 @@
 Priming
+Dependencias:
+pip install itsdangerous
 
 Login
 POST https://priming-1532995a3138.herokuapp.com/login
 https://priming-1532995a3138.herokuapp.com/login
 {
-    "username": "fred",
+    "email": "fred",
     "password": "fred"
 }
 //"access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmcmVkIiwiZXhwIjoxNzExOTk5NDQ0fQ.SfImiHFoHPlpnY6OP0ud5D9aMKP0q_OvuNYdZFfwebg",
