@@ -9,6 +9,8 @@ class LessonService:
     @staticmethod
     async def get_lessons_by_course(course_id):
         lessons = LessonRepository().get_lessons_by_course(course_id)
+        for lesson in lessons:
+            lesson["lesson_id"] = str(lesson["lesson_id"])
         return lessons
 
     @staticmethod
