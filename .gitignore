@@ -3,7 +3,10 @@
 __pycache__/
 *.py[cod]
 *$py.class
+<<<<<<< HEAD
 .idea
+=======
+>>>>>>> origin/main
 
 # C extensions
 *.so
@@ -24,8 +27,11 @@ var/
 wheels/
 share/python-wheels/
 *.egg-info/
+<<<<<<< HEAD
 doc/
 nome_do_ambiente/
+=======
+>>>>>>> origin/main
 .installed.cfg
 *.egg
 MANIFEST

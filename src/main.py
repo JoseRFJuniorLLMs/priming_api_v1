@@ -21,7 +21,7 @@ app.add_middleware(CORSMiddleware,
 @app.on_event("startup")
 async def startup_event():
     client = AsyncIOMotorClient("mongodb+srv://junior:debian23@prime.0zjimdw.mongodb.net/?retryWrites=true&w=majority")
-    await init_beanie(database=client['primeDB'], document_models=[Login, Student, Course])
+    await init_beanie(database=client['primeDB'], document_models=[Login, Student])
 
 
 # Include student routes
@@ -30,7 +30,7 @@ app.include_router(StudentController.app, prefix="/student", tags=["students"])
 # Include login routes
 app.include_router(LoginController.app, prefix="", tags=["login"])
 
-app.include_router(LessonController.app, prefix="/lesson", tags=["lessons"])
+app.include_router(LoginController.app, prefix="/lessons", tags=["lessons"])
 
 # Include your APIRouter for courses
 app.include_router(CourseController.app, prefix="/course", tags=["courses"])
