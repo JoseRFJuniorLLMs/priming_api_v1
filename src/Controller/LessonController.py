@@ -17,6 +17,20 @@ async def lessons_by_course(course_id, current_user: str = Depends(get_current_u
     return lessons
 
 
+@app.get("/v2/course/{course_id}", status_code=200)
+async def lessons_by_course_no_auth(course_id):
+    lessons = await LessonService.get_lessons_by_course(course_id)
+    return lessons
+
+
+@app.get("/v2/{lesson_id}", status_code=200)
+async def lesson_by_id_no_auth(lesson_id):
+    lessons = await LessonService.get_lesson_by_id(lesson_id)
+    for lesson in lessons:
+        lesson["lesson_id"] = str(lesson["lesson_id"])
+    return lessons
+
+
 @app.get("/{lesson_id}", status_code=200)
 async def lesson_by_id(lesson_id, current_user: str = Depends(get_current_user)):
     lessons = await LessonService.get_lesson_by_id(lesson_id)
