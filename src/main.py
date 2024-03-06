@@ -1,16 +1,21 @@
 from fastapi import FastAPI, Depends
 from beanie import init_beanie
 from motor.motor_asyncio import AsyncIOMotorClient
+from starlette.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
 
 from src.Model.Student import Student
 from src.Model.Login import Login
 from src.Model.Course import Course
 from src.Controller import LoginController, StudentController, LessonController, CourseController, LessonDoneController
-from src.Service.LoginService import LoginService
 
 app = FastAPI()
 app.add_middleware(SessionMiddleware, secret_key="secret")
+app.add_middleware(CORSMiddleware,
+                   allow_origins=["*"],
+                   allow_credentials=True,
+                   allow_methods=["*"],
+                   allow_headers=["*"])
 
 
 @app.on_event("startup")
@@ -31,6 +36,7 @@ app.include_router(LessonController.app, prefix="/lesson", tags=["lessons"])
 app.include_router(CourseController.app, prefix="/course", tags=["courses"])
 
 app.include_router(LessonDoneController.app, prefix="/lessonDone", tags=["lessonsDone"])
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="127.0.0.1", port=8000)
