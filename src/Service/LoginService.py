@@ -37,7 +37,7 @@ class LoginService:
 
     @staticmethod
     async def login(login_data):
-        student = StudentRepository.validate_login(login_data.username, login_data.password)
+        student = StudentRepository().validate_login(login_data.username, login_data.password)
         if not student:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials")
         return student
@@ -61,7 +61,7 @@ class LoginService:
         if not student:
             raise credentials_exception
 
-        return await student
+        return student
 
     def validate_login_or_google(func):
         @wraps(func)
