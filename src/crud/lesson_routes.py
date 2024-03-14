@@ -10,7 +10,7 @@ api = APIRouter(prefix='/lesson')
 
 
 @api.get('/{name}')
-async def get_student(name: str):
+async def get_lesson(name: str):
     student = service.get_lesson_by_name(name)
     return student
 
