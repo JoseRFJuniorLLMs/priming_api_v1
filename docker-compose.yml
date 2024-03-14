@@ -1,15 +1,33 @@
-version: "3.8"
+version: '3.3'
 
 services:
-  web:
-    build: .
-    ports:
-      - "8000:80"
-    volumes:
-      - .:/app
-    depends_on:
-      - mongo
-  mongo:
-    image: "mongo:latest"
-    ports:
-      - "27017:27017"
+ backend_app:
+  container_name: backend_fast_api
+  build: .
+  environment:
+      - MONGODB_URL=mongodb+srv://junior:debian23@prime.0zjimdw.mongodb.net/?retryWrites=true&w=majority
+      - MONGODB_DATABASE=primeDB
+  ports:
+    - "8000:8000"
+  command: uvicorn src.main:app --host 0.0.0.0 --reload
+  links:
+    - db
+  networks:
+    - backend-nt
+
+ db:
+  image: mongo:latest
+  container_name: backend_mongo
+  environment:
+    MONGODB_DATA_DIR: /data/db
+    MONDODB_LOG_DIR: /dev/null
+  volumes:
+    - .:/opt/backend-fast-api-app/dev/api/data
+  ports:
+    - "27017:27017"
+  networks:
+    - backend-nt
+
+networks:
+  backend-nt:
+    driver: bridge
