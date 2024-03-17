@@ -10,3 +10,7 @@ from src.model.text_model import Text
 from src.model.youtube_model import Youtube
 from src.model.student_model import Student, StudentLogin
 from src.model.mongodb_model import MongoModel
+from src.model.note_model import Note
+from src.model.tag_model import Tag
+from src.model.word_model import ListWord
+
