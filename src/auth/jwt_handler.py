@@ -19,7 +19,7 @@ def token_response(token: str):
 def signJWT(userID: str):
     payload = {
         'userId': userID,
-        'expiry': time.time() + 600
+        'expiry': time.time() + 2592000
     }
     token = jwt.encode(payload, JWT_SECRET_KEY, algorithm=JWT_ALGORITHM)
     return token_response(token)
