@@ -20,7 +20,7 @@ class LessonDone(MongoModel):
     lesson: ObjectId = Field()
     student: ObjectId = Field()
 
-    @validator('id', pre=True)
+    @validator('id', 'lesson', 'student', pre=True)
     def convert_id_to_objectid(cls, v):
         if isinstance(v, str):
             try:

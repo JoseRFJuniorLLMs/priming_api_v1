@@ -10,13 +10,21 @@ from src.model.mongodb_model import MongoModel
 class Course(MongoModel):
     id: Optional[ObjectId] = Field(None)
     name: str = Field()
-    category: str = Field()
+    category: str | None = Field(default=None)
     level: str = Field()
     price: str = Field()
-    status: str = Field()
+    status: str = Field(default='ACTIVE')
     objective: str = Field()
-    content: List[str] = Field()
-    lessons: List[ObjectId] = Field(None)
+    content: List[str] | None = Field(default=None)
+    lessons: List[ObjectId] | None = Field(None)
+
+    @validator('lessons', pre=True)
+    def foreach_list(cls, v):
+        if isinstance(v, list):
+            a = []
+            for i in v:
+                a.append(ObjectId(i))
+            return a
 
     @validator('id', pre=True)
     def convert_id_to_objectid(cls, v):

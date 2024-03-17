@@ -12,8 +12,8 @@ class Phrase(MongoModel):
     prime: str = Field()
     target: str = Field()
     phrase: List[str] = Field()
-    imagem: List[str] = Field(default=None)
-    url: List[str] = Field(default=None)
+    imagem: List[str] | None = Field(default=None)
+    url: List[str] | None = Field(default=None)
 
     @validator('id', pre=True)
     def convert_id_to_objectid(cls, v):

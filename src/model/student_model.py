@@ -22,25 +22,39 @@ class Student(MongoModel):
     login: str = Field()
     email: str = Field()
     status: str = Field(default=StudentStatus.ACTIVE)
-    city: Optional[str] = Field(None)
-    country: Optional[str] = Field(None)
-    tax_ident_number: Optional[str] = Field(None)
-    personal_ident_number: Optional[str] = Field(None)
-    date_create: Optional[datetime] = Field(None)
-    facebook: Optional[str] = Field(None)
-    x: Optional[str] = Field(None)
-    tiktok: Optional[str] = Field(None)
-    instagram: Optional[str] = Field(None)
-    linkedin: Optional[str] = Field(None)
-    phone: Optional[str] = Field(None)
-    spoken_language: Optional[str] = Field(None)
-    image_url: Optional[str] = Field(None)
-    bitcoin: List[ObjectId] = Field(default=[])
-    lessons_done: List[ObjectId] = Field(default=[])
-    books: List[ObjectId] = Field(default=[])
-    courses: List[ObjectId] = Field(default=[])
-    scheduled_lessons: List[ObjectId] = Field(default=[])
-    list_word_text: List[ObjectId] = Field(default=[])
+    city: Optional[str] | None = Field(None)
+    country: Optional[str] | None = Field(None)
+    tax_ident_number: Optional[str] | None = Field(None)
+    personal_ident_number: Optional[str] | None = Field(None)
+    date_create: Optional[str] | None = Field(None)
+    facebook: Optional[str] | None = Field(None)
+    x: Optional[str] | None = Field(None)
+    tiktok: Optional[str] | None = Field(None)
+    instagram: Optional[str] | None = Field(None)
+    linkedin: Optional[str] | None = Field(None)
+    phone: Optional[str] | None = Field(None)
+    spoken_language: Optional[str] | None = Field(None)
+    image_url: Optional[str] | None = Field(None)
+    bitcoin: List[ObjectId] | None = Field(default=[])
+    lessons_done: List[ObjectId] | None = Field(default=[])
+    books: List[ObjectId] | None = Field(default=[])
+    courses: List[ObjectId] | None = Field(default=[])
+    scheduled_lessons: List[ObjectId] | None = Field(default=[])
+    list_word_text: List[ObjectId] | None = Field(default=[])
+
+    @validator(
+        'bitcoin',
+        'lessons_done',
+        'books',
+        'courses',
+        'scheduled_lessons',
+        'list_word_text', pre=True)
+    def foreach_list(cls, v):
+        if isinstance(v, list):
+            a = []
+            for i in v:
+                a.append(ObjectId(i))
+            return a
 
     @validator('id', pre=True)
     def convert_id_to_objectid(cls, v):

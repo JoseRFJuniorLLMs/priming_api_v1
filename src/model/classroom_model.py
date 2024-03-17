@@ -9,18 +9,26 @@ from src.model.mongodb_model import MongoModel
 
 class Classroom(MongoModel):
     id: Optional[ObjectId] = Field(None)
-    audioUrls: List[str] = Field()
+    audioUrls: List[str] | None = Field(default=None)
     course: str = Field()
-    imageUrls: List[str] = Field()
+    imageUrls: List[str] | None = Field(default=None)
     module: str = Field()
-    phrases: List[str] = Field()
-    prime: str = Field()
-    studentId: str = Field()
-    target: str = Field()
-    text: str = Field()
-    videoUrls: List[str] = Field()
+    phrases: List[str] | None = Field(default=None)
+    prime: str = Field(default=None)
+    students: List[ObjectId] | None = Field(default=None)
+    target: str | None = Field(default=None)
+    text: str | None = Field(default=None)
+    videoUrls: List[str] | None = Field(default=None)
 
-    @validator('id', pre=True)
+    @validator('students', pre=True)
+    def foreach_list(cls, v):
+        if isinstance(v, list):
+            a = []
+            for i in v:
+                a.append(ObjectId(i))
+            return a
+
+    @validator('id', 'studentId', pre=True, check_fields=False)
     def convert_id_to_objectid(cls, v):
         if isinstance(v, str):
             try:
