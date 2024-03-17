@@ -51,12 +51,12 @@ def get_student_by_name(student_name: str):
 
 
 def get_student_by_email(student_email: str):
-    student_dict = db().get_by_key(
+    regex = re.compile(f".*{student_email}.*", re.IGNORECASE)
+    result = db().get_by_filter(
         collection=COLLECTION,
-        key={'email': student_email}
+        key={'email': regex}
     )
-    student = Student.from_mongo(student_dict)
-    return student.mongo() if student else None
+    return dict_to_student_model(result)
 
 
 def dict_to_student_model(student_list: List) -> List[Student]:
