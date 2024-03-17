@@ -48,6 +48,14 @@ def get_lesson_by_name(lesson_name):
     return dict_to_lesson_model(lessons)
 
 
+def get_lesson_by_id(lesson_id):
+    lesson = db().get_by_key(
+        collection=COLLECTION,
+        key={'_id': ObjectId(lesson_id)}
+    )
+    return Lesson.from_mongo(lesson)
+
+
 def dict_to_lesson_model(lesson_list: List) -> List[Lesson]:
     lessons = []
     for lesson in lesson_list:
