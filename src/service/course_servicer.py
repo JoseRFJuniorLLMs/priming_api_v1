@@ -41,11 +41,11 @@ def get_course_by_id(course_id: str):
     return Course.from_mongo(course)
 
 
-def get_courses_by_level(course_level: str):
+def get_courses_by_param(param_name: str, course_level: str):
     regex = re.compile(f".*{course_level}.*", re.IGNORECASE)
     result = db().get_by_filter(
         collection=COLLECTION,
-        key={"level": regex}
+        key={param_name: regex}
     )
     return dict_to_course_model(result)
 
