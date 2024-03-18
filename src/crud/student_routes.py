@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from starlette import status
 
 from src.auth.jwt_bearer import JWTBearer
@@ -14,7 +14,7 @@ async def get_student_by_id(id: str):
         student = service.get_student_by_id(id)
         return student
     except:
-        return {}
+        return HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Id não encontrado!")
 
 
 @api.get('/', dependencies=[Depends(JWTBearer())])

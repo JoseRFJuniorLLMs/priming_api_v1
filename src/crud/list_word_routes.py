@@ -10,15 +10,18 @@ api = APIRouter(prefix='/list-word')
 
 @api.get('/{id}', dependencies=[Depends(JWTBearer())])
 async def get_list_word(id: str):
-    list_word = service.get_list_word_by_id(id)
-    return list_word
+    try:
+        list_word = service.get_list_word_by_id(id)
+        return list_word
+    except:
+        return HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Id não encontrado!")
 
 
 @api.get('/', dependencies=[Depends(JWTBearer())])
 async def get_list_words(prime: str = None):
     if prime:
         return service.get_list_word_by_text_prime(prime)
-    return HTTPException(status_code=404, detail='Parâmetros inválidos!')
+    raise HTTPException(status_code=404, detail='Parâmetros inválidos!')
 
 
 @api.post('/', status_code=status.HTTP_204_NO_CONTENT, dependencies=[Depends(JWTBearer())])

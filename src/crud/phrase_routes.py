@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Body
+from fastapi import APIRouter, Depends, Body, HTTPException
 from starlette import status
 
 from src.auth.jwt_bearer import JWTBearer
@@ -17,8 +17,11 @@ async def get_phrases(prime: str | None = None):
 
 @api.get('/{id}', dependencies=[Depends(JWTBearer())])
 async def get_phrase(id: str):
-    phrase = service.get_phrase_by_id(id)
-    return phrase
+    try:
+        phrase = service.get_phrase_by_id(id)
+        return phrase
+    except:
+        return HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Id não encontrado!')
 
 
 @api.post('/', status_code=status.HTTP_204_NO_CONTENT, dependencies=[Depends(JWTBearer())])
@@ -33,4 +36,7 @@ async def update_phrase(phrase: Phrase = Body(...)):
 
 @api.delete('/{phrase_id}', status_code=status.HTTP_204_NO_CONTENT, dependencies=[Depends(JWTBearer())])
 async def delete_phrase(phrase_id: str):
-    service.delete_by_id(phrase_id)
+    try:
+        service.delete_by_id(phrase_id)
+    except:
+        return HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Id não encontrado!')

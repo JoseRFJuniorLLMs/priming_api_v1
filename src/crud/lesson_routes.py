@@ -11,8 +11,11 @@ api = APIRouter(prefix='/lesson')
 
 @api.get('/{id}', dependencies=[Depends(JWTBearer())])
 async def get_lesson(id: str):
-    student = service.get_lesson_by_id(id)
-    return student
+    try:
+        student = service.get_lesson_by_id(id)
+        return student
+    except:
+        return HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Id não encontrado!')
 
 
 @api.get('/', dependencies=[Depends(JWTBearer())])
@@ -34,4 +37,7 @@ async def update_lesson(lesson: Lesson = Body(...)):
 
 @api.delete('/{lesson_id}', status_code=status.HTTP_204_NO_CONTENT, dependencies=[Depends(JWTBearer())])
 async def delete_lesson(lesson_id: str):
-    service.delete_by_id(lesson_id)
+    try:
+        service.delete_by_id(lesson_id)
+    except:
+        return HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Id não encontrado!')
