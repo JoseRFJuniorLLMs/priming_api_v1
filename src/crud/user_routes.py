@@ -23,7 +23,7 @@ async def user_signup(user: Student = Body(default=None)):
     return signJWT(user.email)
 
 
-@api.patch('/', status_code=status.HTTP_204_NO_CONTENT)
+@api.patch('/student', status_code=status.HTTP_204_NO_CONTENT)
 async def update_student(user: Student = Body(...)):
     service.update_student(user)
     return signJWT(user.email)

@@ -38,9 +38,9 @@ The base URL for all the endpoints is: http://localhost:8000
 
 - POST /login: Make login
   - Body: ```{"email": str, "password": str}```
-- POST /user/: Creates a new user.
+- POST /signup/: Creates a new user.
   - Body: ```{"name": str, "password": str, "login": str, "email": str, "status": str | None, "city": str | None, "country": str | None, "tax_ident_number": str | None, "personal_ident_number": str | None, "date_create": str | None, "facebook": str | None, "x": str | None, "tiktok": str | None, "instagram": str | None, "linkedin": str | None, "phone": str | None, "spoken_language": str | None, "image_url": str | None, "bitcoin": ObjectId | None, "lessons_done": ObjectId | None, "books": ObjectId | None, "courses": ObjectId | None, "scheduled_lessons": ObjectId | None, "list_word_text": ObjectId | None}```
-- PATCH /user/: Updates a user.
+- PATCH /student/: Updates a user.
   - Body: ```{"id": ObjectId, "name": str, "password": str, "login": str, "email": str, "status": str | None, "city": str | None, "country": str | None, "tax_ident_number": str | None, "personal_ident_number": str | None, "date_create": str | None, "facebook": str | None, "x": str | None, "tiktok": str | None, "instagram": str | None, "linkedin": str | None, "phone": str | None, "spoken_language": str | None, "image_url": str | None, "bitcoin": ObjectId | None, "lessons_done": ObjectId | None, "books": ObjectId | None, "courses": ObjectId | None, "scheduled_lessons": ObjectId | None, "list_word_text": ObjectId | None}```
 
 ### Phrases
