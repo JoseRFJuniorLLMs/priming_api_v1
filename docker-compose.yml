@@ -5,8 +5,8 @@ services:
   container_name: backend_fast_api
   build: .
   environment:
-      - MONGODB_URL=mongodb+srv://junior:debian23@prime.0zjimdw.mongodb.net/?retryWrites=true&w=majority
-      - MONGODB_DATABASE=primeDB
+      - MONGODB_URL=${MONGODB_URL}
+      - MONGODB_DATABASE=${MONGODB_DATABASE}
   ports:
     - "8000:8000"
   command: uvicorn src.main:app --host 0.0.0.0 --reload
