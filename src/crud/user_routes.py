@@ -42,5 +42,5 @@ async def update_student(user: Student = Body(...)):
 
 def check_user(data):
     user = service.get_student_by_email(data.email)
-    if data['password'] == user.password:
+    if data.password == user.password:
         return True
