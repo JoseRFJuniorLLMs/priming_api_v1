@@ -15,7 +15,7 @@ class StudentStatus(Enum):
 
 
 class Student(MongoModel):
-    id: Optional[str] = Field(None)
+    id: Optional[ObjectId] = Field(None)
 
     name: str = Field()
     password: str = Field()
