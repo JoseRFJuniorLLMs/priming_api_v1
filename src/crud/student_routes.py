@@ -10,8 +10,11 @@ api = APIRouter(prefix='/student')
 
 @api.get('/{id}', dependencies=[Depends(JWTBearer())])
 async def get_student_by_id(id: str):
-    student = service.get_student_by_id(id)
-    return student
+    try:
+        student = service.get_student_by_id(id)
+        return student
+    except:
+        return {}
 
 
 @api.get('/', dependencies=[Depends(JWTBearer())])

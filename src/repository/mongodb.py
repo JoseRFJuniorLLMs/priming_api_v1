@@ -1,4 +1,5 @@
 from datetime import datetime, date, time
+from fastapi import HTTPException
 from enum import Enum
 from os import getenv
 from dotenv import load_dotenv

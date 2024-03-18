@@ -36,7 +36,7 @@ def get_student_list():
 def get_student_by_id(student_id):
     result = db().get_by_key(
         collection=COLLECTION,
-        key={'_id': ObjectId(student_id)}
+        key={'_id': student_id}
     )
     return Student.from_mongo(result)
 
