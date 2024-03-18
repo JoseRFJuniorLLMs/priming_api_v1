@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Body
+from fastapi import APIRouter, Depends, Body, HTTPException
 from starlette import status
 
 from src.auth.jwt_bearer import JWTBearer
@@ -15,7 +15,9 @@ async def get_tag_by_id(tag_id):
 
 @api.get('/', dependencies=[Depends(JWTBearer())])
 async def get_tag_by_student(student_id: str = None):
-    return service.get_tag_by_student(student_id)
+    if student_id:
+        return service.get_tag_by_student(student_id)
+    return HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Parametro student não informado!")
 
 
 @api.post('/', status_code=status.HTTP_204_NO_CONTENT, dependencies=[Depends(JWTBearer())])

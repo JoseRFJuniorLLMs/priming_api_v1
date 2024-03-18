@@ -21,7 +21,7 @@ class Student(MongoModel):
     password: str = Field()
     login: str = Field()
     email: str = Field()
-    status: str = Field(default=StudentStatus.ACTIVE)
+    status: str | None = Field(default=StudentStatus.ACTIVE)
     city: Optional[str] | None = Field(None)
     country: Optional[str] | None = Field(None)
     tax_ident_number: Optional[str] | None = Field(None)
