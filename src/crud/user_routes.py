@@ -10,7 +10,7 @@ api = APIRouter()
 
 @api.post('/login')
 async def user_login(user: StudentLogin = Body(default=None)):
-    user_data = service.get_student_by_email(user.email)
+    user_data = service.get_student_by_email(user.email)[0]
     if user_data and user.password == user_data.password:
         return signJWT(user.email)
     else:
