@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from starlette.middleware.cors import CORSMiddleware
 
 from src.crud import (
     student_routes,
@@ -12,6 +13,12 @@ from src.crud import (
 from src.logger import config_log
 
 app = FastAPI()
+app.add_middleware(CORSMiddleware,
+                   allow_origins=["*"],
+                   allow_credentials=True,
+                   allow_methods=["*"],
+                   allow_headers=["*"])
+
 app.include_router(student_routes.api)
 app.include_router(course_routes.api)
 app.include_router(lesson_routes.api)
