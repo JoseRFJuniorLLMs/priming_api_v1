@@ -8,7 +8,7 @@ from src.service import student_servicer as service
 api = APIRouter(prefix='/student')
 
 
-@api.get('/{id}', dependencies=[Depends(JWTBearer())])
+@api.get('/{id}')
 async def get_student_by_id(id: str):
     try:
         student = service.get_student_by_id(id)
@@ -17,7 +17,7 @@ async def get_student_by_id(id: str):
         return HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Id não encontrado!")
 
 
-@api.get('/', dependencies=[Depends(JWTBearer())])
+@api.get('/')
 async def get_students(name: str | None = None, email: str | None = None):
     if email:
         return service.get_student_by_email(email)
@@ -26,6 +26,6 @@ async def get_students(name: str | None = None, email: str | None = None):
     return service.get_student_list()
 
 
-@api.delete('/{student_id}', status_code=status.HTTP_204_NO_CONTENT, dependencies=[Depends(JWTBearer())])
+@api.delete('/{student_id}', status_code=status.HTTP_204_NO_CONTENT)
 async def delete_student(student_id: str):
     service.delete_by_id(student_id)

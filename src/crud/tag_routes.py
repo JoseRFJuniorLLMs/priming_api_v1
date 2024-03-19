@@ -8,7 +8,7 @@ from src.model import Tag
 api = APIRouter(prefix='/tag')
 
 
-@api.get('/{tag_id}', dependencies=[Depends(JWTBearer())])
+@api.get('/{tag_id}')
 async def get_tag_by_id(tag_id):
     try:
         return service.get_tag_by_id(tag_id)
@@ -16,23 +16,23 @@ async def get_tag_by_id(tag_id):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Id não encontrado!')
 
 
-@api.get('/', dependencies=[Depends(JWTBearer())])
+@api.get('/')
 async def get_tag_by_student(student_id: str = None):
     if student_id:
         return service.get_tag_by_student(student_id)
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Parametro student não informado!")
 
 
-@api.post('/', status_code=status.HTTP_204_NO_CONTENT, dependencies=[Depends(JWTBearer())])
+@api.post('/', status_code=status.HTTP_204_NO_CONTENT)
 async def create_tag(tag: Tag = Body(...)):
     service.create_tag(tag)
 
 
-@api.patch('/', status_code=status.HTTP_204_NO_CONTENT, dependencies=[Depends(JWTBearer())])
+@api.patch('/', status_code=status.HTTP_204_NO_CONTENT)
 async def update_tag(tag: Tag = Body(...)):
     service.update_tag(tag)
 
 
-@api.delete('/{tag_id}', status_code=status.HTTP_204_NO_CONTENT, dependencies=[Depends(JWTBearer())])
+@api.delete('/{tag_id}', status_code=status.HTTP_204_NO_CONTENT)
 async def delete_tag(tag_id: str):
     service.delete_by_id(tag_id)
