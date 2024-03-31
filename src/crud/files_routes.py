@@ -14,7 +14,7 @@ async def create_file(file: UploadFile = File(...)):
         with BytesIO(file_bytes) as source:
             with sr.AudioFile(source) as audio_source:
                 audio_data = recognizer.record(audio_source)
-                text = recognizer.recognize_whisper(audio_data)
+                text = recognizer.recognize_google(audio_data, language='pt-BR')
                 return text
     except sr.UnknownValueError as e:
         raise HTTPException(400, e)
