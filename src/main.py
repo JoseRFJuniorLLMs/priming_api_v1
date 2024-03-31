@@ -9,7 +9,8 @@ from src.crud import (
     phrase_routes,
     note_routes,
     tag_routes,
-    list_word_routes)
+    list_word_routes,
+    files_routes)
 from src.logger import config_log
 
 app = FastAPI()
@@ -27,5 +28,6 @@ app.include_router(phrase_routes.api)
 app.include_router(note_routes.api)
 app.include_router(tag_routes.api)
 app.include_router(list_word_routes.api)
+app.include_router(files_routes.api)
 
 config_log()
