@@ -1,20 +1,37 @@
-import speech_recognition as sr
+import io
+from pydub import AudioSegment
+from google.oauth2 import service_account
+from google.cloud import speech
 from fastapi import APIRouter, HTTPException, UploadFile, File
 
 api = APIRouter(prefix='/files')
 
+credentials = service_account.Credentials.from_service_account_file('src/config/credentials.json')
+client = speech.SpeechClient(credentials=credentials)
+
 
 @api.post('/audio')
-async def create_file(file: UploadFile = File(...)):
+async def read_audio(file: UploadFile = File(...)):
     try:
-        recognizer = sr.Recognizer()
-        # Read the file asynchronously
-        file_bytes = await file.read()
-        from io import BytesIO
-        with BytesIO(file_bytes) as source:
-            with sr.AudioFile(source) as audio_source:
-                audio_data = recognizer.record(audio_source)
-                text = recognizer.recognize_google(audio_data, language='pt-BR')
-                return text
-    except sr.UnknownValueError as e:
-        raise HTTPException(400, e)
+        content = await file.read()
+
+        audio = AudioSegment.from_file(io.BytesIO(content))
+        audio = audio.set_channels(1)
+
+        with io.BytesIO() as output:
+            audio.export(output, format="wav")
+            content_mono = output.getvalue()
+
+        audio_mono = speech.RecognitionAudio(content=content_mono)
+
+        config = speech.RecognitionConfig(
+            encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
+            sample_rate_hertz=44100,
+            language_code="en-US",
+        )
+
+        response = client.recognize(config=config, audio=audio_mono)
+        return response.results[0].alternatives[0].transcript
+
+    except Exception as e:
+        raise HTTPException(status_code=400, detail='Error reading audio file')
