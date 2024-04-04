@@ -24,6 +24,7 @@ CREDENTIAL = {
   "client_x509_cert_url": os.getenv('CLIENT_X509_CERT_URL'),
   "universe_domain": os.getenv('UNIVERSE_DOMAIN')
 }
+
 credentials = service_account.Credentials.from_service_account_info(CREDENTIAL)
 client = speech.SpeechClient(credentials=credentials)
 
