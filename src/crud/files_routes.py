@@ -1,5 +1,6 @@
 import io
-
+import os
+import json
 from pydub import AudioSegment
 from google.oauth2 import service_account
 from google.cloud import speech
@@ -8,8 +9,11 @@ from src.config.crendential import CREDENTIAL
 
 api = APIRouter(prefix='/files')
 
+if not os.path.exists('src/config/credential.json'):
+    with open('src/config/credential.json', 'w') as file:
+        json.dump(CREDENTIAL, file, indent=4)
 
-credentials = service_account.Credentials.from_service_account_info(CREDENTIAL)
+credentials = service_account.Credentials.from_service_account_file('src/config/credential.json')
 client = speech.SpeechClient(credentials=credentials)
 
 
